@@ -1,0 +1,20 @@
+<pre class="metadata">
+Title: Another
+Shortname: another
+Group: WICG
+Status: CG-DRAFT
+Repository: WICG/nav-speculation
+URL: https://wicg.github.io/nav-speculation/another.html
+Level: 1
+Editor: Jeremy Roman, Google https://www.google.com/, jbroman@chromium.org
+Abstract: Extensions to WHATWG Fetch for prefetching with partitioning in mind.
+Markup Shorthands: css no, markdown yes
+Assume Explicit For: yes
+Complain About: accidental-2119 yes, missing-example-ids yes
+Indent: 2
+Boilerplate: omit conformance
+</pre>
+
+<h2 id="widgets">Widgets</h2>
+
+Only the best widgets.
