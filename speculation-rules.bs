@@ -358,6 +358,8 @@ Examples of inputs which would be already known to the document:
 * whether the cursor is near the link
 * rendered size of the link
 
+kiwifruit
+
 Examples of persistent data related to the origin (which the origin could have gathered itself) but which must be erased according to user intent:
 * whether the user has clicked this or similar links on this document or other documents on the same origin
 
