@@ -368,6 +368,8 @@ Examples of device information which may be valuable in deciding whether prefetc
 
 <h3 id="privacy-intent">Intent</h3>
 
+Bananas!
+
 While efforts have been made to minimize the privacy impact of prefetching, some users may nonetheless prefer that prefetching not occur, even though this may make loading slower. User agents are encouraged to provide a setting to disable prefetching features to accommodate such users.
 
 <h3 id="privacy-partitioning">Partitioning</h3>
