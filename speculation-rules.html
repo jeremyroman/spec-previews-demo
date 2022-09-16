@@ -1,0 +1,1819 @@
+<!doctype html><html lang="en">
+ <head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <title>Speculation Rules</title>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+  <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
+  <meta content="Bikeshed version 44af0bf3e, updated Fri Jul 29 17:05:16 2022 -0700" name="generator">
+  <link href="https://wicg.github.io/nav-speculation/speculation-rules.html" rel="canonical">
+<style>
+/* domintro from https://resources.whatwg.org/standard.css */
+.domintro {
+  position: relative;
+  color: green;
+  background: #DDFFDD;
+  margin: 2.5em 0 2em 0;
+  padding: 1.5em 1em 0.5em 2em;
+}
+
+.domintro dt, .domintro dt * {
+  color: black;
+  font-size: inherit;
+}
+.domintro dd {
+  margin: 0.5em 0 1em 2em; padding: 0;
+}
+.domintro dd p {
+  margin: 0.5em 0;
+}
+.domintro::before {
+  content: 'For web developers (non-normative)';
+  background: green;
+  color: white;
+  padding: 0.15em 0.25em;
+  font-style: normal;
+  position: absolute;
+  top: -0.8em;
+  left: -0.8em;
+}
+</style>
+<style>/* style-autolinks */
+
+.css.css, .property.property, .descriptor.descriptor {
+    color: var(--a-normal-text);
+    font-size: inherit;
+    font-family: inherit;
+}
+.css::before, .property::before, .descriptor::before {
+    content: "‘";
+}
+.css::after, .property::after, .descriptor::after {
+    content: "’";
+}
+.property, .descriptor {
+    /* Don't wrap property and descriptor names */
+    white-space: nowrap;
+}
+.type { /* CSS value <type> */
+    font-style: italic;
+}
+pre .property::before, pre .property::after {
+    content: "";
+}
+[data-link-type="property"]::before,
+[data-link-type="propdesc"]::before,
+[data-link-type="descriptor"]::before,
+[data-link-type="value"]::before,
+[data-link-type="function"]::before,
+[data-link-type="at-rule"]::before,
+[data-link-type="selector"]::before,
+[data-link-type="maybe"]::before {
+    content: "‘";
+}
+[data-link-type="property"]::after,
+[data-link-type="propdesc"]::after,
+[data-link-type="descriptor"]::after,
+[data-link-type="value"]::after,
+[data-link-type="function"]::after,
+[data-link-type="at-rule"]::after,
+[data-link-type="selector"]::after,
+[data-link-type="maybe"]::after {
+    content: "’";
+}
+
+[data-link-type].production::before,
+[data-link-type].production::after,
+.prod [data-link-type]::before,
+.prod [data-link-type]::after {
+    content: "";
+}
+
+[data-link-type=element],
+[data-link-type=element-attr] {
+    font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace;
+    font-size: .9em;
+}
+[data-link-type=element]::before { content: "<" }
+[data-link-type=element]::after  { content: ">" }
+
+[data-link-type=biblio] {
+    white-space: pre;
+}</style>
+<style>/* style-colors */
+
+/* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
+:root {
+    color-scheme: light dark;
+
+    --text: black;
+    --bg: white;
+
+    --unofficial-watermark: url(https://www.w3.org/StyleSheets/TR/2016/logos/UD-watermark);
+
+    --logo-bg: #1a5e9a;
+    --logo-active-bg: #c00;
+    --logo-text: white;
+
+    --tocnav-normal-text: #707070;
+    --tocnav-normal-bg: var(--bg);
+    --tocnav-hover-text: var(--tocnav-normal-text);
+    --tocnav-hover-bg: #f8f8f8;
+    --tocnav-active-text: #c00;
+    --tocnav-active-bg: var(--tocnav-normal-bg);
+
+    --tocsidebar-text: var(--text);
+    --tocsidebar-bg: #f7f8f9;
+    --tocsidebar-shadow: rgba(0,0,0,.1);
+    --tocsidebar-heading-text: hsla(203,20%,40%,.7);
+
+    --toclink-text: var(--text);
+    --toclink-underline: #3980b5;
+    --toclink-visited-text: var(--toclink-text);
+    --toclink-visited-underline: #054572;
+
+    --heading-text: #005a9c;
+
+    --hr-text: var(--text);
+
+    --algo-border: #def;
+
+    --del-text: red;
+    --del-bg: transparent;
+    --ins-text: #080;
+    --ins-bg: transparent;
+
+    --a-normal-text: #034575;
+    --a-normal-underline: #bbb;
+    --a-visited-text: var(--a-normal-text);
+    --a-visited-underline: #707070;
+    --a-hover-bg: rgba(75%, 75%, 75%, .25);
+    --a-active-text: #c00;
+    --a-active-underline: #c00;
+
+    --blockquote-border: silver;
+    --blockquote-bg: transparent;
+    --blockquote-text: currentcolor;
+
+    --issue-border: #e05252;
+    --issue-bg: #fbe9e9;
+    --issue-text: var(--text);
+    --issueheading-text: #831616;
+
+    --example-border: #e0cb52;
+    --example-bg: #fcfaee;
+    --example-text: var(--text);
+    --exampleheading-text: #574b0f;
+
+    --note-border: #52e052;
+    --note-bg: #e9fbe9;
+    --note-text: var(--text);
+    --noteheading-text: hsl(120, 70%, 30%);
+    --notesummary-underline: silver;
+
+    --assertion-border: #aaa;
+    --assertion-bg: #eee;
+    --assertion-text: black;
+
+    --advisement-border: orange;
+    --advisement-bg: #fec;
+    --advisement-text: var(--text);
+    --advisementheading-text: #b35f00;
+
+    --warning-border: red;
+    --warning-bg: hsla(40,100%,50%,0.95);
+    --warning-text: var(--text);
+
+    --amendment-border: #330099;
+    --amendment-bg: #F5F0FF;
+    --amendment-text: var(--text);
+    --amendmentheading-text: #220066;
+
+    --def-border: #8ccbf2;
+    --def-bg: #def;
+    --def-text: var(--text);
+    --defrow-border: #bbd7e9;
+
+    --datacell-border: silver;
+
+    --indexinfo-text: #707070;
+
+    --indextable-hover-text: black;
+    --indextable-hover-bg: #f7f8f9;
+
+    --outdatedspec-bg: rgba(0, 0, 0, .5);
+    --outdatedspec-text: black;
+    --outdated-bg: maroon;
+    --outdated-text: white;
+    --outdated-shadow: red;
+
+    --editedrec-bg: darkorange;
+}</style>
+<style>/* style-counters */
+
+body {
+    counter-reset: example figure issue;
+}
+.issue {
+    counter-increment: issue;
+}
+.issue:not(.no-marker)::before {
+    content: "Issue " counter(issue);
+}
+
+.example {
+    counter-increment: example;
+}
+.example:not(.no-marker)::before {
+    content: "Example " counter(example);
+}
+.invalid.example:not(.no-marker)::before,
+.illegal.example:not(.no-marker)::before {
+    content: "Invalid Example" counter(example);
+}
+
+figcaption {
+    counter-increment: figure;
+}
+figcaption:not(.no-marker)::before {
+    content: "Figure " counter(figure) " ";
+}</style>
+<style>/* style-dfn-panel */
+
+:root {
+    --dfnpanel-bg: #ddd;
+    --dfnpanel-text: var(--text);
+}
+.dfn-panel {
+    position: absolute;
+    z-index: 35;
+    height: auto;
+    width: -webkit-fit-content;
+    width: fit-content;
+    max-width: 300px;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0.5em 0.75em;
+    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+    background: var(--dfnpanel-bg);
+    color: var(--dfnpanel-text);
+    border: outset 0.2em;
+}
+.dfn-panel:not(.on) { display: none; }
+.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+.dfn-panel > b { display: block; }
+.dfn-panel a { color: var(--dfnpanel-text); }
+.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+.dfn-panel > b + b { margin-top: 0.25em; }
+.dfn-panel ul { padding: 0; }
+.dfn-panel li { list-style: inside; }
+.dfn-panel.activated {
+    display: inline-block;
+    position: fixed;
+    left: .5em;
+    bottom: 2em;
+    margin: 0 auto;
+    max-width: calc(100vw - 1.5em - .4em - .5em);
+    max-height: 30vh;
+}
+
+.dfn-paneled { cursor: pointer; }
+</style>
+<style>/* style-issues */
+
+a[href].issue-return {
+    float: right;
+    float: inline-end;
+    color: var(--issueheading-text);
+    font-weight: bold;
+    text-decoration: none;
+}
+</style>
+<style>/* style-md-lists */
+
+/* This is a weird hack for me not yet following the commonmark spec
+   regarding paragraph and lists. */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}</style>
+<style>/* style-selflinks */
+
+:root {
+    --selflink-text: white;
+    --selflink-bg: gray;
+    --selflink-hover-text: black;
+}
+.heading, .issue, .note, .example, li, dt {
+    position: relative;
+}
+a.self-link {
+    position: absolute;
+    top: 0;
+    left: calc(-1 * (3.5rem - 26px));
+    width: calc(3.5rem - 26px);
+    height: 2em;
+    text-align: center;
+    border: none;
+    transition: opacity .2s;
+    opacity: .5;
+}
+a.self-link:hover {
+    opacity: 1;
+}
+.heading > a.self-link {
+    font-size: 83%;
+}
+li > a.self-link {
+    left: calc(-1 * (3.5rem - 26px) - 2em);
+}
+dfn > a.self-link {
+    top: auto;
+    left: auto;
+    opacity: 0;
+    width: 1.5em;
+    height: 1.5em;
+    background: var(--selflink-bg);
+    color: var(--selflink-text);
+    font-style: normal;
+    transition: opacity .2s, background-color .2s, color .2s;
+}
+dfn:hover > a.self-link {
+    opacity: 1;
+}
+dfn > a.self-link:hover {
+    color: var(--selflink-hover-text);
+}
+
+a.self-link::before            { content: "¶"; }
+.heading > a.self-link::before { content: "§"; }
+dfn > a.self-link::before      { content: "#"; }
+</style>
+<style>/* style-var-click-highlighting */
+
+    var { cursor: pointer; }
+    var.selected0 { background-color: #F4D200; box-shadow: 0 0 0 2px #F4D200; }
+    var.selected1 { background-color: #FF87A2; box-shadow: 0 0 0 2px #FF87A2; }
+    var.selected2 { background-color: #96E885; box-shadow: 0 0 0 2px #96E885; }
+    var.selected3 { background-color: #3EEED2; box-shadow: 0 0 0 2px #3EEED2; }
+    var.selected4 { background-color: #EACFB6; box-shadow: 0 0 0 2px #EACFB6; }
+    var.selected5 { background-color: #82DDFF; box-shadow: 0 0 0 2px #82DDFF; }
+    var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
+    </style>
+<style>/* style-darkmode */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text: #ddd;
+        --bg: black;
+
+        --unofficial-watermark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cg fill='%23100808' transform='translate(200 200) rotate(-45) translate(-200 -200)' stroke='%23100808' stroke-width='3'%3E%3Ctext x='50%25' y='220' style='font: bold 70px sans-serif; text-anchor: middle; letter-spacing: 6px;'%3EUNOFFICIAL%3C/text%3E%3Ctext x='50%25' y='305' style='font: bold 70px sans-serif; text-anchor: middle; letter-spacing: 6px;'%3EDRAFT%3C/text%3E%3C/g%3E%3C/svg%3E");
+
+        --logo-bg: #1a5e9a;
+        --logo-active-bg: #c00;
+        --logo-text: white;
+
+        --tocnav-normal-text: #999;
+        --tocnav-normal-bg: var(--bg);
+        --tocnav-hover-text: var(--tocnav-normal-text);
+        --tocnav-hover-bg: #080808;
+        --tocnav-active-text: #f44;
+        --tocnav-active-bg: var(--tocnav-normal-bg);
+
+        --tocsidebar-text: var(--text);
+        --tocsidebar-bg: #080808;
+        --tocsidebar-shadow: rgba(255,255,255,.1);
+        --tocsidebar-heading-text: hsla(203,20%,40%,.7);
+
+        --toclink-text: var(--text);
+        --toclink-underline: #6af;
+        --toclink-visited-text: var(--toclink-text);
+        --toclink-visited-underline: #054572;
+
+        --heading-text: #8af;
+
+        --hr-text: var(--text);
+
+        --algo-border: #456;
+
+        --del-text: #f44;
+        --del-bg: transparent;
+        --ins-text: #4a4;
+        --ins-bg: transparent;
+
+        --a-normal-text: #6af;
+        --a-normal-underline: #555;
+        --a-visited-text: var(--a-normal-text);
+        --a-visited-underline: var(--a-normal-underline);
+        --a-hover-bg: rgba(25%, 25%, 25%, .2);
+        --a-active-text: #f44;
+        --a-active-underline: var(--a-active-text);
+
+        --borderedblock-bg: rgba(255, 255, 255, .05);
+
+        --blockquote-border: silver;
+        --blockquote-bg: var(--borderedblock-bg);
+        --blockquote-text: currentcolor;
+
+        --issue-border: #e05252;
+        --issue-bg: var(--borderedblock-bg);
+        --issue-text: var(--text);
+        --issueheading-text: hsl(0deg, 70%, 70%);
+
+        --example-border: hsl(50deg, 90%, 60%);
+        --example-bg: var(--borderedblock-bg);
+        --example-text: var(--text);
+        --exampleheading-text: hsl(50deg, 70%, 70%);
+
+        --note-border: hsl(120deg, 100%, 35%);
+        --note-bg: var(--borderedblock-bg);
+        --note-text: var(--text);
+        --noteheading-text: hsl(120, 70%, 70%);
+        --notesummary-underline: silver;
+
+        --assertion-border: #444;
+        --assertion-bg: var(--borderedblock-bg);
+        --assertion-text: var(--text);
+
+        --advisement-border: orange;
+        --advisement-bg: #222218;
+        --advisement-text: var(--text);
+        --advisementheading-text: #f84;
+
+        --warning-border: red;
+        --warning-bg: hsla(40,100%,20%,0.95);
+        --warning-text: var(--text);
+
+        --amendment-border: #330099;
+        --amendment-bg: #080010;
+        --amendment-text: var(--text);
+        --amendmentheading-text: #cc00ff;
+
+        --def-border: #8ccbf2;
+        --def-bg: #080818;
+        --def-text: var(--text);
+        --defrow-border: #136;
+
+        --datacell-border: silver;
+
+        --indexinfo-text: #aaa;
+
+        --indextable-hover-text: var(--text);
+        --indextable-hover-bg: #181818;
+
+        --outdatedspec-bg: rgba(255, 255, 255, .5);
+        --outdatedspec-text: black;
+        --outdated-bg: maroon;
+        --outdated-text: white;
+        --outdated-shadow: red;
+
+        --editedrec-bg: darkorange;
+    }
+    /* In case a transparent-bg image doesn't expect to be on a dark bg,
+       which is quite common in practice... */
+    img { background: white; }
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --selflink-text: black;
+        --selflink-bg: silver;
+        --selflink-hover-text: white;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --dfnpanel-bg: #222;
+        --dfnpanel-text: var(--text);
+    }
+}</style>
+ <body class="h-entry">
+  <div class="head">
+   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
+   <h1 class="p-name no-ref" id="title">Speculation Rules</h1>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2022-09-15">15 September 2022</time></p>
+   <div data-fill-with="spec-metadata">
+    <dl>
+     <dt>This version:
+     <dd><a class="u-url" href="https://wicg.github.io/nav-speculation/speculation-rules.html">https://wicg.github.io/nav-speculation/speculation-rules.html</a>
+     <dt>Issue Tracking:
+     <dd><a href="https://github.com/WICG/nav-speculation/issues/">GitHub</a>
+     <dd><a href="#issues-index">Inline In Spec</a>
+     <dt class="editor">Editor:
+     <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:jbroman@chromium.org">Jeremy Roman</a> (<a class="p-org org" href="https://www.google.com/">Google</a>)
+    </dl>
+   </div>
+   <div data-fill-with="warning"></div>
+   <p class="copyright" data-fill-with="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2022 the Contributors to the Speculation Rules Specification, published by the <a href="https://www.w3.org/community/wicg/">Web Platform Incubator Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
+A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available. </p>
+   <hr title="Separator for header">
+  </div>
+  <div class="p-summary" data-fill-with="abstract">
+   <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
+   <p>A flexible syntax for defining what outgoing links can be prepared speculatively before navigation.</p>
+  </div>
+  <div data-fill-with="at-risk"></div>
+  <h2 class="no-num no-toc no-ref heading settled" id="status"><span class="content">Status of this document</span></h2>
+  <div data-fill-with="status">
+   <p> This specification was published by the <a href="https://www.w3.org/community/wicg/">Web Platform Incubator Community Group</a>.
+  It is not a W3C Standard nor is it on the W3C Standards Track.
+
+  Please note that under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a> there is a limited opt-out and other conditions apply.
+
+  Learn more about <a href="http://www.w3.org/community/">W3C Community and Business Groups</a>. </p>
+   <p></p>
+  </div>
+  <div data-fill-with="at-risk"></div>
+  <nav data-fill-with="table-of-contents" id="toc">
+   <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
+   <ol class="toc" role="directory">
+    <li>
+     <a href="#speculation-rules"><span class="secno">1</span> <span class="content">Speculation rules</span></a>
+     <ol class="toc">
+      <li><a href="#speculation-rules-dfns"><span class="secno">1.1</span> <span class="content">Definitions</span></a>
+      <li><a href="#speculation-rules-script"><span class="secno">1.2</span> <span class="content">The <code><span>script</span></code> element</span></a>
+      <li><a href="#speculation-rules-prepare-the-script-element-patch"><span class="secno">1.3</span> <span class="content">Prepare the script element</span></a>
+      <li><a href="#speculation-rules-parsing"><span class="secno">1.4</span> <span class="content">Parsing</span></a>
+      <li><a href="#speculation-rules-processing"><span class="secno">1.5</span> <span class="content">Processing model</span></a>
+     </ol>
+    <li>
+     <a href="#security-considerations"><span class="secno">2</span> <span class="content">Security considerations</span></a>
+     <ol class="toc">
+      <li><a href="#security-csrf"><span class="secno">2.1</span> <span class="content">Cross-site request forgery</span></a>
+      <li><a href="#security-xss"><span class="secno">2.2</span> <span class="content">Cross-site scripting</span></a>
+      <li><a href="#type-confusion"><span class="secno">2.3</span> <span class="content">Type confusion</span></a>
+      <li><a href="#security-ip-anonymization"><span class="secno">2.4</span> <span class="content">IP anonymization</span></a>
+     </ol>
+    <li>
+     <a href="#privacy-considerations"><span class="secno">3</span> <span class="content">Privacy considerations</span></a>
+     <ol class="toc">
+      <li><a href="#privacy-heuristics"><span class="secno">3.1</span> <span class="content">Heuristics</span></a>
+      <li><a href="#privacy-intent"><span class="secno">3.2</span> <span class="content">Intent</span></a>
+      <li><a href="#privacy-partitioning"><span class="secno">3.3</span> <span class="content">Partitioning</span></a>
+      <li><a href="#privacy-identity-joining"><span class="secno">3.4</span> <span class="content">Identity joining</span></a>
+     </ol>
+    <li>
+     <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
+     <ol class="toc">
+      <li><a href="#index-defined-here"><span class="secno"></span> <span class="content">Terms defined by this specification</span></a>
+      <li><a href="#index-defined-elsewhere"><span class="secno"></span> <span class="content">Terms defined by reference</span></a>
+     </ol>
+    <li>
+     <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
+     <ol class="toc">
+      <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
+      <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
+     </ol>
+    <li><a href="#issues-index"><span class="secno"></span> <span class="content">Issues Index</span></a>
+   </ol>
+  </nav>
+  <main>
+   <h2 class="heading settled" data-level="1" id="speculation-rules"><span class="secno">1. </span><span class="content">Speculation rules</span><a class="self-link" href="#speculation-rules"></a></h2>
+   <h3 class="heading settled" data-level="1.1" id="speculation-rules-dfns"><span class="secno">1.1. </span><span class="content">Definitions</span><a class="self-link" href="#speculation-rules-dfns"></a></h3>
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="speculation-rule">speculation rule</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct" id="ref-for-struct">struct</a> with the following <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item">items</a>:</p>
+   <ul>
+    <li data-md>
+     <p><dfn class="dfn-paneled" data-dfn-for="speculation rule" data-dfn-type="dfn" data-noexport id="speculation-rule-urls">URLs</dfn>, an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set">ordered set</a> of <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url" id="ref-for-concept-url">URLs</a></p>
+    <li data-md>
+     <p><dfn class="dfn-paneled" data-dfn-for="speculation rule" data-dfn-type="dfn" data-noexport id="speculation-rule-requirements">requirements</dfn>, an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set①">ordered set</a> of <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string" id="ref-for-string">strings</a></p>
+    <li data-md>
+     <p><dfn class="dfn-paneled" data-dfn-for="speculation rule" data-dfn-type="dfn" data-noexport id="speculation-rule-target-browsing-context-name-hint">target browsing context name hint</dfn>, a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string" id="ref-for-string①">string</a> or null</p>
+   </ul>
+   <p>The only valid string for <a data-link-type="dfn" href="#speculation-rule-requirements" id="ref-for-speculation-rule-requirements">requirements</a> to contain is "<code>anonymous-client-ip-when-cross-origin</code>".</p>
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="speculation-rule-set">speculation rule set</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct" id="ref-for-struct①">struct</a> with the following <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item①">items</a>:</p>
+   <ul>
+    <li data-md>
+     <p><dfn class="dfn-paneled" data-dfn-for="speculation rule set" data-dfn-type="dfn" data-noexport id="speculation-rule-set-prefetch-rules">prefetch rules</dfn>, a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list">list</a> of <a data-link-type="dfn" href="#speculation-rule" id="ref-for-speculation-rule">speculation rules</a></p>
+    <li data-md>
+     <p><dfn class="dfn-paneled" data-dfn-for="speculation rule set" data-dfn-type="dfn" data-noexport id="speculation-rule-set-prerender-rules">prerender rules</dfn>, a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list①">list</a> of <a data-link-type="dfn" href="#speculation-rule" id="ref-for-speculation-rule①">speculation rules</a></p>
+   </ul>
+   <h3 class="heading settled" data-level="1.2" id="speculation-rules-script"><span class="secno">1.2. </span><span class="content">The <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/scripting.html#script" id="ref-for-script">script</a></code> element</span><a class="self-link" href="#speculation-rules-script"></a></h3>
+   <p><em>Note</em>: This section contains modifications to the corresponding section of <a data-link-type="biblio" href="#biblio-html">[HTML]</a>.</p>
+   <p>To process speculation rules consistently with the existing script types, we make the following changes:</p>
+   <ul>
+    <li data-md>
+     <p>Add "<code>speculationrules</code>" to the list of valid values for a <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/scripting.html#script" id="ref-for-script①">script</a></code> element’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/scripting.html#concept-script-type" id="ref-for-concept-script-type">type</a>.</p>
+    <li data-md>
+     <p>Add a <a data-link-type="dfn" href="#speculation-rule-set" id="ref-for-speculation-rule-set">speculation rule set</a> to the list of valid values for a <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/scripting.html#script" id="ref-for-script②">script</a></code> element’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/scripting.html#concept-script-result" id="ref-for-concept-script-result">result</a>.</p>
+   </ul>
+   <p>The following algorithms are updated accordingly:</p>
+   <ul>
+    <li data-md>
+     <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/scripting.html#prepare-the-script-element" id="ref-for-prepare-the-script-element">Prepare the script element</a>: see <a href="#speculation-rules-prepare-the-script-element-patch">§ 1.3 Prepare the script element</a>.</p>
+    <li data-md>
+     <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/scripting.html#execute-the-script-element" id="ref-for-execute-the-script-element">Execute the script element</a>: Add the following case to the switch on <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/scripting.html#concept-script-type" id="ref-for-concept-script-type①">type</a>:</p>
+     <dl>
+      <dt>"<code>speculationrules</code>"
+      <dd>
+       <ol>
+        <li data-md>
+         <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#assert" id="ref-for-assert">Assert</a>: Never reached.</p>
+       </ol>
+     </dl>
+   </ul>
+   <p class="issue" id="issue-c2e21e13"><a class="self-link" href="#issue-c2e21e13"></a>We should consider whether we also want to make this execute even if scripting is disabled.</p>
+   <p class="issue" id="issue-bb120c28"><a class="self-link" href="#issue-bb120c28"></a>We should also incorporate the case where a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/scripting.html#dom-script-src" id="ref-for-dom-script-src">src</a></code> attribute is set.</p>
+   <p class="issue" id="issue-9cd39e70"><a class="self-link" href="#issue-9cd39e70"></a>We could fire <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/indices.html#event-error" id="ref-for-event-error">error</a></code> and <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/indices.html#event-load" id="ref-for-event-load">load</a></code> events if we wanted to.</p>
+   <ul>
+    <li data-md>
+     <p>In <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/scripting.html#dom-script-supports" id="ref-for-dom-script-supports">supports(type)</a></code> method steps, before</p>
+     <blockquote>
+      <ol start="3">
+       <li data-md>
+        <p>Return false.</p>
+      </ol>
+     </blockquote>
+     <p>add the following step:</p>
+     <blockquote>
+      <ol start="3">
+       <li data-md>
+        <p>If type is "<code>speculationrules</code>", then return true.</p>
+      </ol>
+     </blockquote>
+   </ul>
+   <div class="algorithm" data-algorithm="script element removing steps">
+     The following steps are added as the <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/scripting.html#script" id="ref-for-script③">script</a></code> element’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#html-element-removing-steps" id="ref-for-html-element-removing-steps">HTML element removing steps</a>, given <var>removedNode</var> and <var>oldParent</var>: 
+    <ol>
+     <li data-md>
+      <p>If <var>removedNode</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/scripting.html#concept-script-result" id="ref-for-concept-script-result①">result</a> is a <a data-link-type="dfn" href="#speculation-rule-set" id="ref-for-speculation-rule-set①">speculation rule set</a>, then:</p>
+      <ol>
+       <li data-md>
+        <p>Let <var>document</var> be <var>removedNode</var>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-node-document" id="ref-for-concept-node-document">node document</a>.</p>
+       <li data-md>
+        <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-remove" id="ref-for-list-remove">Remove</a> it from <var>document</var>’s <a data-link-type="dfn" href="#document-list-of-speculation-rule-sets" id="ref-for-document-list-of-speculation-rule-sets">list of speculation rule sets</a>.</p>
+       <li data-md>
+        <p>Set <var>removedNode</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/scripting.html#already-started" id="ref-for-already-started">already started</a> flag to false.</p>
+       <li data-md>
+        <p>Set <var>removedNode</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/scripting.html#concept-script-result" id="ref-for-concept-script-result②">result</a> to null.</p>
+       <li data-md>
+        <p><a data-link-type="dfn" href="#consider-speculation" id="ref-for-consider-speculation">Consider speculation</a> for <var>document</var>.</p>
+      </ol>
+      <div class="note" role="note">This means that the rule set can be reparsed if the script is reinserted.</div>
+    </ol>
+   </div>
+   <div class="algorithm" data-algorithm="script element children changed steps">
+     The following steps are added as the <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/scripting.html#script" id="ref-for-script④">script</a></code> element’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-node-children-changed-ext" id="ref-for-concept-node-children-changed-ext">children changed steps</a> for an element <var>scriptElement</var>. 
+    <ol>
+     <li data-md>
+      <p>If <var>scriptElement</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/scripting.html#concept-script-result" id="ref-for-concept-script-result③">result</a> is a <a data-link-type="dfn" href="#speculation-rule-set" id="ref-for-speculation-rule-set②">speculation rule set</a>, then:</p>
+      <ol>
+       <li data-md>
+        <p>Let <var>document</var> be <var>scriptElement</var>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-node-document" id="ref-for-concept-node-document①">node document</a>.</p>
+       <li data-md>
+        <p>Let <var>ruleSet</var> be <var>scriptElement</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/scripting.html#concept-script-result" id="ref-for-concept-script-result④">result</a>.</p>
+       <li data-md>
+        <p>Let <var>newResult</var> be the result of <a data-link-type="dfn" href="#parse-speculation-rules" id="ref-for-parse-speculation-rules">parsing speculation rules</a> given <var>scriptElement</var>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-child-text-content" id="ref-for-concept-child-text-content">child text content</a> and <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/urls-and-fetching.html#document-base-url" id="ref-for-document-base-url">document base URL</a>.</p>
+       <li data-md>
+        <p>Set <var>scriptElement</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/scripting.html#concept-script-result" id="ref-for-concept-script-result⑤">result</a> to <var>newResult</var>.</p>
+       <li data-md>
+        <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-replace" id="ref-for-list-replace">Replace</a> <var>ruleSet</var> with <var>newResult</var> in <var>document</var>’s <a data-link-type="dfn" href="#document-list-of-speculation-rule-sets" id="ref-for-document-list-of-speculation-rule-sets①">list of speculation rule sets</a>.</p>
+       <li data-md>
+        <p><a data-link-type="dfn" href="#consider-speculation" id="ref-for-consider-speculation①">Consider speculation</a> for <var>document</var>.</p>
+      </ol>
+      <div class="note" role="note">This means that the rule set is reparsed immediately if inline changes are made.</div>
+    </ol>
+   </div>
+   <h3 class="heading settled" data-level="1.3" id="speculation-rules-prepare-the-script-element-patch"><span class="secno">1.3. </span><span class="content">Prepare the script element</span><a class="self-link" href="#speculation-rules-prepare-the-script-element-patch"></a></h3>
+   <p>Inside the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/scripting.html#prepare-the-script-element" id="ref-for-prepare-the-script-element①">prepare the script element</a> algorithm we make the following changes:</p>
+   <ul>
+    <li data-md>
+     <p>Insert the following step after the step that checks for an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ascii-case-insensitive" id="ref-for-ascii-case-insensitive">ASCII case-insensitive</a> match for the string "<code>module</code>":</p>
+     <ul>
+      <li data-md>
+       <p>If the script block’s type string is an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ascii-case-insensitive" id="ref-for-ascii-case-insensitive①">ASCII case-insensitive</a> match for the string "<code>speculationrules</code>", then set <var>el</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/scripting.html#concept-script-type" id="ref-for-concept-script-type②">type</a> to "<code>speculationrules</code>".</p>
+     </ul>
+    <li data-md>
+     <p>Insert the following case in the switch on <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/scripting.html#concept-script-type" id="ref-for-concept-script-type③">type</a> within the step which begins "If <var>el</var> does not have a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/scripting.html#dom-script-src" id="ref-for-dom-script-src①">src</a></code> content attribute..."</p>
+     <dl>
+      <dt>"<code>speculationrules</code>"
+      <dd>
+       <ol>
+        <li data-md>
+         <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="#parse-speculation-rules" id="ref-for-parse-speculation-rules①">parsing speculation rules</a> given source text and base URL.</p>
+        <li data-md>
+         <p>If <var>result</var> is not null, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append">append</a> it to <var>el</var>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-node-document" id="ref-for-concept-node-document②">node document</a>'s <a data-link-type="dfn" href="#document-list-of-speculation-rule-sets" id="ref-for-document-list-of-speculation-rule-sets②">list of speculation rule sets</a>.</p>
+        <li data-md>
+         <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/scripting.html#mark-as-ready" id="ref-for-mark-as-ready">Mark as ready</a> <var>el</var> given <var>result</var>.</p>
+        <li data-md>
+         <p><a data-link-type="dfn" href="#consider-speculation" id="ref-for-consider-speculation②">Consider speculation</a> for <var>document</var>.</p>
+       </ol>
+     </dl>
+   </ul>
+   <h3 class="heading settled" data-level="1.4" id="speculation-rules-parsing"><span class="secno">1.4. </span><span class="content">Parsing</span><a class="self-link" href="#speculation-rules-parsing"></a></h3>
+   <p class="note" role="note"> The general principle here is to allow the existence of directives which are not understood, but not to accept into the rule set a rule which the user agent does not fully understand.
+  This reduces the risk of unintended activity by user agents which are unaware of most recently added directives which might limit the scope of a rule. </p>
+   <div class="algorithm" data-algorithm="parse speculation rules">
+     To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="parse-speculation-rules">parse speculation rules</dfn> given a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string" id="ref-for-string②">string</a> <var>input</var> and a <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url" id="ref-for-concept-url①">URL</a> <var>baseURL</var>, perform the following steps. They return a <a data-link-type="dfn" href="#speculation-rule-set" id="ref-for-speculation-rule-set③">speculation rule set</a> or null. 
+    <ol>
+     <li data-md>
+      <p>Let <var>parsed</var> be the result of <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#parse-a-json-string-to-an-infra-value" id="ref-for-parse-a-json-string-to-an-infra-value">parsing a JSON string to an Infra value</a> given <var>input</var>.</p>
+     <li data-md>
+      <p>If <var>parsed</var> is not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map">map</a>, then return null.</p>
+     <li data-md>
+      <p>Let <var>result</var> be an empty <a data-link-type="dfn" href="#speculation-rule-set" id="ref-for-speculation-rule-set④">speculation rule set</a>.</p>
+     <li data-md>
+      <p>If <var>parsed</var>["<code>prefetch</code>"] <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-exists" id="ref-for-map-exists">exists</a> and is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list②">list</a>, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-iterate" id="ref-for-list-iterate">for each</a> <var>prefetchRule</var> of <var>parsed</var>["<code>prefetch</code>"]:</p>
+      <ol>
+       <li data-md>
+        <p>If <var>prefetchRule</var> is not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map①">map</a>, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue">continue</a>.</p>
+       <li data-md>
+        <p>Let <var>rule</var> be the result of <a data-link-type="dfn" href="#parse-a-speculation-rule" id="ref-for-parse-a-speculation-rule">parsing a speculation rule</a> given <var>prefetchRule</var> and <var>baseURL</var>.</p>
+       <li data-md>
+        <p>If <var>rule</var> is null, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue①">continue</a>.</p>
+       <li data-md>
+        <p>If <var>rule</var>’s <a data-link-type="dfn" href="#speculation-rule-target-browsing-context-name-hint" id="ref-for-speculation-rule-target-browsing-context-name-hint">target browsing context name hint</a> is not null, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue②">continue</a>.</p>
+       <li data-md>
+        <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append①">Append</a> <var>rule</var> to <var>result</var>’s <a data-link-type="dfn" href="#speculation-rule-set-prefetch-rules" id="ref-for-speculation-rule-set-prefetch-rules">prefetch rules</a>.</p>
+      </ol>
+     <li data-md>
+      <p>If <var>parsed</var>["<code>prerender</code>"] <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-exists" id="ref-for-map-exists①">exists</a> and is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list③">list</a>, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-iterate" id="ref-for-list-iterate①">for each</a> <var>prerenderRule</var> of <var>parsed</var>["<code>prerender</code>"]:</p>
+      <ol>
+       <li data-md>
+        <p>If <var>prerenderRule</var> is not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map②">map</a>, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue③">continue</a>.</p>
+       <li data-md>
+        <p>Let <var>rule</var> be the result of <a data-link-type="dfn" href="#parse-a-speculation-rule" id="ref-for-parse-a-speculation-rule①">parsing a speculation rule</a> given <var>prerenderRule</var> and <var>baseURL</var>.</p>
+       <li data-md>
+        <p>If <var>rule</var> is null, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue④">continue</a>.</p>
+       <li data-md>
+        <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append②">Append</a> <var>rule</var> to <var>result</var>’s <a data-link-type="dfn" href="#speculation-rule-set-prerender-rules" id="ref-for-speculation-rule-set-prerender-rules">prerender rules</a>.</p>
+      </ol>
+     <li data-md>
+      <p>Return <var>result</var>.</p>
+    </ol>
+   </div>
+   <div class="algorithm" data-algorithm="parse a speculation rule">
+     To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="parse-a-speculation-rule">parse a speculation rule</dfn> given a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map③">map</a> <var>input</var> and a <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url" id="ref-for-concept-url②">URL</a> <var>baseURL</var>, perform the following steps. They return a <a data-link-type="dfn" href="#speculation-rule" id="ref-for-speculation-rule②">speculation rule</a> or null. 
+    <ol>
+     <li data-md>
+      <p>If <var>input</var> has any <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-key" id="ref-for-map-key">key</a> other than "<code>source</code>", "<code>urls</code>", "<code>requires</code>", and <code>"target_hint"</code>, then return null.</p>
+     <li data-md>
+      <p>If <var>input</var>["<code>source</code>"] does not <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-exists" id="ref-for-map-exists②">exist</a> or is not the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string" id="ref-for-string③">string</a> "<code>list</code>", then return null.</p>
+     <li data-md>
+      <p>Let <var>urls</var> be an empty <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list④">list</a>.</p>
+     <li data-md>
+      <p>If <var>input</var>["<code>urls</code>"] does not <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-exists" id="ref-for-map-exists③">exist</a>, is not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list⑤">list</a>, or has any element which is not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string" id="ref-for-string④">string</a>, then return null.</p>
+     <li data-md>
+      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-iterate" id="ref-for-list-iterate②">For each</a> <var>urlString</var> of <var>input</var>["<code>urls</code>"]:</p>
+      <ol>
+       <li data-md>
+        <p>Let <var>parsedURL</var> be the result of <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-basic-url-parser" id="ref-for-concept-basic-url-parser">parsing</a> <var>urlString</var> with <var>baseURL</var>.</p>
+       <li data-md>
+        <p>If <var>parsedURL</var> is failure, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue⑤">continue</a>.</p>
+       <li data-md>
+        <p>If <var>parsedURL</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-scheme" id="ref-for-concept-url-scheme">scheme</a> is not an <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#http-scheme" id="ref-for-http-scheme">HTTP(S) scheme</a>, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue⑥">continue</a>.</p>
+       <li data-md>
+        <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append③">Append</a> <var>parsedURL</var> to <var>urls</var>.</p>
+      </ol>
+     <li data-md>
+      <p>Let <var>requirements</var> be an empty <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set②">ordered set</a>.</p>
+     <li data-md>
+      <p>If <var>input</var>["<code>requires</code>"] <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-exists" id="ref-for-map-exists④">exists</a>, but is not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list⑥">list</a>, then return null.</p>
+     <li data-md>
+      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-iterate" id="ref-for-list-iterate③">For each</a> <var>requirement</var> of <var>input</var>["<code>requires</code>"]:</p>
+      <ol>
+       <li data-md>
+        <p>If <var>requirement</var> is not the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string" id="ref-for-string⑤">string</a> "<code>anonymous-client-ip-when-cross-origin</code>", then return null.</p>
+       <li data-md>
+        <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#set-append" id="ref-for-set-append">Append</a> <var>requirement</var> to <var>requirements</var>.</p>
+      </ol>
+     <li data-md>
+      <p>Let <var>targetHint</var> be null.</p>
+     <li data-md>
+      <p>If <var>input</var>["<code>target_hint</code>"] <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-exists" id="ref-for-map-exists⑤">exists</a>:</p>
+      <ol>
+       <li data-md>
+        <p>If <var>input</var>["<code>target_hint</code>"] is not a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#valid-browsing-context-name-or-keyword" id="ref-for-valid-browsing-context-name-or-keyword">valid browsing context name or keyword</a>, then return null.</p>
+       <li data-md>
+        <p>Set <var>targetHint</var> to <var>input</var>["<code>target_hint</code>"].</p>
+      </ol>
+     <li data-md>
+      <p>Return a <a data-link-type="dfn" href="#speculation-rule" id="ref-for-speculation-rule③">speculation rule</a> with <a data-link-type="dfn" href="#speculation-rule-urls" id="ref-for-speculation-rule-urls">URLs</a> <var>urls</var>, <a data-link-type="dfn" href="#speculation-rule-requirements" id="ref-for-speculation-rule-requirements①">requirements</a> <var>requirements</var>, and <a data-link-type="dfn" href="#speculation-rule-target-browsing-context-name-hint" id="ref-for-speculation-rule-target-browsing-context-name-hint①">target browsing context name hint</a> <var>targetHint</var>.</p>
+    </ol>
+   </div>
+   <h3 class="heading settled" data-level="1.5" id="speculation-rules-processing"><span class="secno">1.5. </span><span class="content">Processing model</span><a class="self-link" href="#speculation-rules-processing"></a></h3>
+   <p>A <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document" id="ref-for-concept-document">document</a> has a <dfn class="dfn-paneled" data-dfn-for="document" data-dfn-type="dfn" data-export id="document-list-of-speculation-rule-sets">list of speculation rule sets</dfn>, which is an initially empty <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list⑦">list</a>.</p>
+   <p>Periodically, for any <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document" id="ref-for-concept-document①">document</a> <var>document</var>, the user agent may <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task" id="ref-for-queue-a-global-task">queue a global task</a> on the <a class="idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-manipulation-task-source" id="ref-for-dom-manipulation-task-source">DOM manipulation task source</a> with <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global">relevant global object</a> to <a data-link-type="dfn" href="#consider-speculation" id="ref-for-consider-speculation③">consider speculation</a> for <var>document</var>.</p>
+   <p class="note" role="note"> The user agent will likely do when resources are idle and available, or otherwise the circumstances of its previous decision whether to start a speculation could have changed. </p>
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="prefetch-candidate">prefetch candidate</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct" id="ref-for-struct②">struct</a> with the following <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item②">items</a>:</p>
+   <ul>
+    <li data-md>
+     <p><dfn class="dfn-paneled" data-dfn-for="prefetch candidate" data-dfn-type="dfn" data-noexport id="prefetch-candidate-url">URL</dfn>, an <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url" id="ref-for-concept-url③">URL</a></p>
+    <li data-md>
+     <p><dfn class="dfn-paneled" data-dfn-for="prefetch candidate" data-dfn-type="dfn" data-noexport id="prefetch-candidate-referrer-policy">referrer policy</dfn>, a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-referrer-policy/#referrer-policy" id="ref-for-referrer-policy">referrer policy</a></p>
+    <li data-md>
+     <p><dfn class="dfn-paneled" data-dfn-for="prefetch candidate" data-dfn-type="dfn" data-noexport id="prefetch-candidate-anonymization-policy">anonymization policy</dfn>, a <a data-link-type="dfn" href="prefetch.html#prefetch-ip-anonymization-policy" id="ref-for-prefetch-ip-anonymization-policy">prefetch IP anonymization policy</a></p>
+   </ul>
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="prerender-candidate">prerender candidate</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct" id="ref-for-struct③">struct</a> with the following <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item③">items</a>:</p>
+   <ul>
+    <li data-md>
+     <p><dfn class="dfn-paneled" data-dfn-for="prerender candidate" data-dfn-type="dfn" data-noexport id="prerender-candidate-url">URL</dfn>, an <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url" id="ref-for-concept-url④">URL</a></p>
+    <li data-md>
+     <p><dfn class="dfn-paneled" data-dfn-for="prerender candidate" data-dfn-type="dfn" data-noexport id="prerender-candidate-target-browsing-context-name-hint">target browsing context name hint</dfn>, a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#valid-browsing-context-name-or-keyword" id="ref-for-valid-browsing-context-name-or-keyword①">valid browsing context name or keyword</a> or null</p>
+    <li data-md>
+     <p><dfn class="dfn-paneled" data-dfn-for="prerender candidate" data-dfn-type="dfn" data-noexport id="prerender-candidate-referrer-policy">referrer policy</dfn>, a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-referrer-policy/#referrer-policy" id="ref-for-referrer-policy①">referrer policy</a></p>
+   </ul>
+   <div class="algorithm" data-algorithm="continues" data-algorithm-for="prefetch candidate">
+     A <a data-link-type="dfn" href="#prefetch-candidate" id="ref-for-prefetch-candidate">prefetch candidate</a> <var>prefetchCandidate</var> <dfn class="dfn-paneled" data-dfn-for="prefetch candidate" data-dfn-type="dfn" data-noexport id="prefetch-candidate-continues">continues</dfn> a <a data-link-type="dfn" href="prefetch.html#prefetch-record" id="ref-for-prefetch-record">prefetch record</a> <var>prefetchRecord</var> if the following are all true: 
+    <ul>
+     <li data-md>
+      <p><var>prefetchRecord</var>’s <a data-link-type="dfn" href="prefetch.html#prefetch-record-label" id="ref-for-prefetch-record-label">label</a> is "<code>speculation-rules</code>"</p>
+     <li data-md>
+      <p><var>prefetchRecord</var>’s <a data-link-type="dfn" href="prefetch.html#prefetch-record-state" id="ref-for-prefetch-record-state">state</a> is not "<code>canceled</code>"</p>
+     <li data-md>
+      <p><var>prefetchRecord</var>’s <a data-link-type="dfn" href="prefetch.html#prefetch-record-url" id="ref-for-prefetch-record-url">URL</a> equals <var>prefetchCandidate</var>’s <a data-link-type="dfn" href="#prefetch-candidate-url" id="ref-for-prefetch-candidate-url">URL</a></p>
+     <li data-md>
+      <p><var>prefetchRecord</var>’s <a data-link-type="dfn" href="prefetch.html#prefetch-record-anonymization-policy" id="ref-for-prefetch-record-anonymization-policy">anonymization policy</a> equals <var>prefetchCandidate</var>’s <a data-link-type="dfn" href="#prefetch-candidate-anonymization-policy" id="ref-for-prefetch-candidate-anonymization-policy">anonymization policy</a></p>
+    </ul>
+   </div>
+   <div class="algorithm" data-algorithm="consider speculation">
+     To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="consider-speculation">consider speculation</dfn> for a <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document" id="ref-for-concept-document②">document</a> <var>document</var>: 
+    <ol>
+     <li data-md>
+      <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#await-a-stable-state" id="ref-for-await-a-stable-state">Await a stable state</a>. Steps in the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#synchronous-section" id="ref-for-synchronous-section">synchronous section</a> are marked with ⌛.</p>
+     <li data-md>
+      <p>⌛ If <var>document</var> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active" id="ref-for-fully-active">fully active</a>, then return.</p>
+      <p class="issue" id="issue-30bcda38"><a class="self-link" href="#issue-30bcda38"></a>It’s likely that we should also handle prerendered and back-forward cached documents. </p>
+     <li data-md>
+      <p>⌛ Let <var>prefetchCandidates</var> be an empty <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list⑧">list</a>.</p>
+     <li data-md>
+      <p>⌛ Let <var>prerenderCandidates</var> be an empty <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list⑨">list</a>.</p>
+     <li data-md>
+      <p>⌛ For each <var>ruleSet</var> of <var>document</var>’s <a data-link-type="dfn" href="#document-list-of-speculation-rule-sets" id="ref-for-document-list-of-speculation-rule-sets③">list of speculation rule sets</a>:</p>
+      <ol>
+       <li data-md>
+        <p>⌛ <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-iterate" id="ref-for-list-iterate④">For each</a> <var>rule</var> of <var>ruleSet</var>’s <a data-link-type="dfn" href="#speculation-rule-set-prefetch-rules" id="ref-for-speculation-rule-set-prefetch-rules①">prefetch rules</a>:</p>
+        <ol>
+         <li data-md>
+          <p>⌛ Let <var>anonymizationPolicy</var> be null.</p>
+         <li data-md>
+          <p>⌛ If <var>rule</var>’s <a data-link-type="dfn" href="#speculation-rule-requirements" id="ref-for-speculation-rule-requirements②">requirements</a> <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain">contains</a> "<code>anonymous-client-ip-when-cross-origin</code>", set <var>anonymizationPolicy</var> to a <a data-link-type="dfn" href="prefetch.html#cross-origin-prefetch-ip-anonymization-policy" id="ref-for-cross-origin-prefetch-ip-anonymization-policy">cross-origin prefetch IP anonymization policy</a> whose <a data-link-type="dfn" href="prefetch.html#cross-origin-prefetch-ip-anonymization-policy-origin" id="ref-for-cross-origin-prefetch-ip-anonymization-policy-origin">origin</a> is <var>document</var>’s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document-origin" id="ref-for-concept-document-origin">origin</a>.</p>
+         <li data-md>
+          <p>⌛ <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-iterate" id="ref-for-list-iterate⑤">For each</a> <var>url</var> of <var>rule</var>’s <a data-link-type="dfn" href="#speculation-rule-urls" id="ref-for-speculation-rule-urls①">URLs</a>:</p>
+          <ol>
+           <li data-md>
+            <p>⌛ <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append④">Append</a> a <a data-link-type="dfn" href="#prefetch-candidate" id="ref-for-prefetch-candidate①">prefetch candidate</a> with <a data-link-type="dfn" href="#prefetch-candidate-url" id="ref-for-prefetch-candidate-url①">URL</a> <var>url</var>, <a data-link-type="dfn" href="#prefetch-candidate-referrer-policy" id="ref-for-prefetch-candidate-referrer-policy">referrer policy</a> "<code>strict-origin-when-cross-origin</code>", and <a data-link-type="dfn" href="#prefetch-candidate-anonymization-policy" id="ref-for-prefetch-candidate-anonymization-policy①">anonymization policy</a> <var>anonymizationPolicy</var> to <var>prefetchCandidates</var>.</p>
+          </ol>
+        </ol>
+       <li data-md>
+        <p>⌛ <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-iterate" id="ref-for-list-iterate⑥">For each</a> <var>rule</var> of <var>ruleSet</var>’s <a data-link-type="dfn" href="#speculation-rule-set-prerender-rules" id="ref-for-speculation-rule-set-prerender-rules①">prerender rules</a>:</p>
+        <ol>
+         <li data-md>
+          <p>⌛ <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-iterate" id="ref-for-list-iterate⑦">For each</a> <var>url</var> of <var>rule</var>’s <a data-link-type="dfn" href="#speculation-rule-urls" id="ref-for-speculation-rule-urls②">URLs</a>:</p>
+          <ol>
+           <li data-md>
+            <p>⌛ Let <var>prerenderCandidate</var> be a new <a data-link-type="dfn" href="#prerender-candidate" id="ref-for-prerender-candidate">prerender candidate</a> whose <a data-link-type="dfn" href="#prerender-candidate-url" id="ref-for-prerender-candidate-url">URL</a> is <var>url</var>, <a data-link-type="dfn" href="#prerender-candidate-referrer-policy" id="ref-for-prerender-candidate-referrer-policy">referrer policy</a> is "<code>strict-origin-when-cross-origin</code>", and <a data-link-type="dfn" href="#prerender-candidate-target-browsing-context-name-hint" id="ref-for-prerender-candidate-target-browsing-context-name-hint">target browsing context name hint</a> is <var>rule</var>’s <a data-link-type="dfn" href="#speculation-rule-target-browsing-context-name-hint" id="ref-for-speculation-rule-target-browsing-context-name-hint②">target browsing context name hint</a>.</p>
+           <li data-md>
+            <p>⌛ <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append⑤">Append</a> <var>prerenderCandidate</var> to <var>prerenderCandidates</var>.</p>
+          </ol>
+        </ol>
+      </ol>
+     <li data-md>
+      <p>⌛ <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-iterate" id="ref-for-list-iterate⑧">For each</a> <var>prefetchRecord</var> of <var>document</var>’s <a data-link-type="dfn" href="prefetch.html#document-prefetch-records" id="ref-for-document-prefetch-records">prefetch records</a>:</p>
+      <ol>
+       <li data-md>
+        <p>⌛ If <var>prefetchRecord</var>’s <a data-link-type="dfn" href="prefetch.html#prefetch-record-label" id="ref-for-prefetch-record-label①">label</a> is not "<code>speculation-rules</code>", then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue⑦">continue</a>.</p>
+       <li data-md>
+        <p>⌛ <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#assert" id="ref-for-assert①">Assert</a>: <var>prefetchRecord</var>’s <a data-link-type="dfn" href="prefetch.html#prefetch-record-state" id="ref-for-prefetch-record-state①">state</a> is not "<code>canceled</code>".</p>
+       <li data-md>
+        <p>⌛ If no element of <var>prefetchCandidates</var> <a data-link-type="dfn" href="#prefetch-candidate-continues" id="ref-for-prefetch-candidate-continues">continues</a> <var>prefetchRecord</var>, then <a data-link-type="dfn" href="prefetch.html#prefetch-record-cancel-and-discard" id="ref-for-prefetch-record-cancel-and-discard">cancel and discard</a> <var>prefetchRecord</var> given <var>document</var>.</p>
+      </ol>
+     <li data-md>
+      <p>End the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#synchronous-section" id="ref-for-synchronous-section①">synchronous section</a>, continuing the remaining steps <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel" id="ref-for-in-parallel">in parallel</a>.</p>
+     <li data-md>
+      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-iterate" id="ref-for-list-iterate⑨">For each</a> <var>prefetchCandidate</var> of <var>prefetchCandidates</var>:</p>
+      <ol>
+       <li data-md>
+        <p>The user agent may run the following steps:</p>
+        <ol>
+         <li data-md>
+          <p>Let <var>prefetchRecord</var> be a new <a data-link-type="dfn" href="prefetch.html#prefetch-record" id="ref-for-prefetch-record①">prefetch record</a> whose <a data-link-type="dfn" href="prefetch.html#prefetch-record-url" id="ref-for-prefetch-record-url①">URL</a> is <var>prefetchCandidate</var>’s <a data-link-type="dfn" href="#prefetch-candidate-url" id="ref-for-prefetch-candidate-url②">URL</a>, <a data-link-type="dfn" href="prefetch.html#prefetch-record-referrer-policy" id="ref-for-prefetch-record-referrer-policy">referrer policy</a> is <var>prefetchCandidate</var>’s <a data-link-type="dfn" href="#prefetch-candidate-referrer-policy" id="ref-for-prefetch-candidate-referrer-policy①">referrer policy</a>, <a data-link-type="dfn" href="prefetch.html#prefetch-record-anonymization-policy" id="ref-for-prefetch-record-anonymization-policy①">anonymization policy</a> is <var>prefetchCandidate</var>’s <a data-link-type="dfn" href="#prefetch-candidate-anonymization-policy" id="ref-for-prefetch-candidate-anonymization-policy②">anonymization policy</a>, and <a data-link-type="dfn" href="prefetch.html#prefetch-record-label" id="ref-for-prefetch-record-label②">label</a> is "<code>speculation-rules</code>".</p>
+         <li data-md>
+          <p><a data-link-type="dfn" href="prefetch.html#prefetch" id="ref-for-prefetch">Prefetch</a> given <var>document</var> and <var>prefetchRecord</var>.</p>
+        </ol>
+      </ol>
+     <li data-md>
+      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-iterate" id="ref-for-list-iterate①⓪">For each</a> <var>prerenderCandidate</var> of <var>prefetchCandidates</var>:</p>
+      <ol>
+       <li data-md>
+        <p>The user agent may <a data-link-type="dfn" href="prerendering.html#create-a-prerendering-browsing-context" id="ref-for-create-a-prerendering-browsing-context">create a prerendering browsing context</a> given <var>prerenderCandidate</var>’s <a data-link-type="dfn" href="#prerender-candidate-url" id="ref-for-prerender-candidate-url①">URL</a>, <var>prerenderCandidate</var>’s <a data-link-type="dfn" href="#prerender-candidate-referrer-policy" id="ref-for-prerender-candidate-referrer-policy①">referrer policy</a> and <var>document</var>.</p>
+        <p>The user agent can use <var>prerenderCandidate</var>’s <a data-link-type="dfn" href="#prerender-candidate-target-browsing-context-name-hint" id="ref-for-prerender-candidate-target-browsing-context-name-hint①">target browsing context name hint</a> as a hint to their implementation of the <a data-link-type="dfn" href="prerendering.html#create-a-prerendering-browsing-context" id="ref-for-create-a-prerendering-browsing-context①">create a prerendering browsing context</a> algorithm. This hint indicates that the web developer expects the eventual <a data-link-type="dfn" href="prerendering.html#prerendering-browsing-context-activate" id="ref-for-prerendering-browsing-context-activate">activation</a> of the created browsing context to be in place of a particular predecessor browsing context: the one that would be chosen by the invoking the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#the-rules-for-choosing-a-browsing-context-given-a-browsing-context-name" id="ref-for-the-rules-for-choosing-a-browsing-context-given-a-browsing-context-name">rules for choosing a browsing context</a> given <var>prerenderCandidate</var>’s <a data-link-type="dfn" href="#prerender-candidate-target-browsing-context-name-hint" id="ref-for-prerender-candidate-target-browsing-context-name-hint②">target browsing context name hint</a> and <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc">browsing context</a>.</p>
+        <p class="note" role="note">This is just a hint. The <a data-link-type="dfn" href="#speculation-rule-target-browsing-context-name-hint" id="ref-for-speculation-rule-target-browsing-context-name-hint③">target browsing context name hint</a> actually has no normative implications, after being parsed. It is still perfectly fine to <a data-link-type="dfn" href="prerendering.html#prerendering-browsing-context-activate" id="ref-for-prerendering-browsing-context-activate①">activate</a> in place of a different predecessor browsing context that was not hinted at. </p>
+      </ol>
+    </ol>
+   </div>
+   <p class="issue" id="issue-1cafd308"><a class="self-link" href="#issue-1cafd308"></a> We should also cancel speculated prerenders. </p>
+   <p class="issue" id="issue-ffd6d56f"><a class="self-link" href="#issue-ffd6d56f"></a> We should revisit the <a data-link-type="dfn" href="https://w3c.github.io/webappsec-referrer-policy/#referrer-policy" id="ref-for-referrer-policy②">referrer policies</a> used here. </p>
+   <h2 class="heading settled" data-level="2" id="security-considerations"><span class="secno">2. </span><span class="content">Security considerations</span><a class="self-link" href="#security-considerations"></a></h2>
+   <h3 class="heading settled" data-level="2.1" id="security-csrf"><span class="secno">2.1. </span><span class="content">Cross-site request forgery</span><a class="self-link" href="#security-csrf"></a></h3>
+   <p>This specification allows documents to cause HTTP requests to be issued.</p>
+   <p>When any supported action acts on a URL which is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin">same origin</a> to the document, then this does not constitute a risk of cross-site request forgery, since the request uses only the credentials available to the document.</p>
+   <p>Otherwise, requests are always issued without using any previously existing <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#credentials" id="ref-for-credentials">credentials</a>. This limits the ambient authority available to any potentially forged request, and such requests can already be made through <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a>, a subresource or frame, or various other means. Site operators are therefore already well-advised to use CSRF tokens or other mitigations for this threat.</p>
+   <h3 class="heading settled" data-level="2.2" id="security-xss"><span class="secno">2.2. </span><span class="content">Cross-site scripting</span><a class="self-link" href="#security-xss"></a></h3>
+   <p>This specification causes activity in response to content found in the document, so it is worth considering the options open to an attacker able to inject unescaped HTML.</p>
+   <p>Such an attacker is otherwise able to inject JavaScript, frames or other elements. The activity possible with this specification (requesting fetches etc) is generally less dangerous than arbitrary script execution, and comparable to other elements. The same mitigations available to other features also apply here. In particular, the <a data-link-type="biblio" href="#biblio-csp">[CSP]</a> <code>script-src</code> directive applies to the parsing of the speculation rules and the <code>prefetch-src</code> directive applies to prefetch requests arising from the rules.</p>
+   <h3 class="heading settled" data-level="2.3" id="type-confusion"><span class="secno">2.3. </span><span class="content">Type confusion</span><a class="self-link" href="#type-confusion"></a></h3>
+   <p>In the case of speculation rules in an inline <code>&lt;script></code>, an application which erroneously parsed speculation rules as a JavaScript script (though user agents are instructed not to execute scripts who "<code>type</code>" is unrecognized) would either interpret it as the empty block <code>{}</code> or produce a syntax error, since the U+003A COLON (<code>:</code>) after the first key is invalid JavaScript. In neither case would such an application execute harmful behavior.</p>
+   <p>Since the parsing behavior of the <code>&lt;script></code> element has long been part of HTML, any modern HTML parser would not construct any non-text children of the element. There is thus a low risk of other text hidden inside a <code>&lt;script></code> element with <code>type="speculationrules"</code> which is parsed as part of the script content by compliant HTML implementations but as HTML tags by others.</p>
+   <p>Authors should, however, still escape any potentially attacker-controlled content inserted into speculation rules. In particular, it may be necessary to escape JSON syntax as well as, if the speculation rules are in an inline <code>&lt;script></code> tag, the closing <code>&lt;/script></code> tag. <a data-link-type="biblio" href="#biblio-csp">[CSP]</a> is a useful additional mitigation for vulnerabilities of this type.</p>
+   <div class="issue" id="issue-8b05d1b2"><a class="self-link" href="#issue-8b05d1b2"></a>Expand this section once externally loaded (via "<code>src</code>") speculation rules are specified.</div>
+   <h3 class="heading settled" data-level="2.4" id="security-ip-anonymization"><span class="secno">2.4. </span><span class="content">IP anonymization</span><a class="self-link" href="#security-ip-anonymization"></a></h3>
+   <p>This specification allows authors to request prefetch traffic using IP anonymization technology provided by the user agent. The details of this technology are not a part of this specification; nonetheless some general principles apply.</p>
+   <p>To the extent IP anonymization is implemented using a proxy service, it is advisable to minimize the information available to the service operator and other entities on the network path. This likely involves, at a minimum, the use of <a data-link-type="biblio" href="#biblio-tls">[TLS]</a> for the connection.</p>
+   <p>Site operators should be aware that, similar to virtual private network (VPN) technology, the client IP address seen by the HTTP server may not exactly correspond to the user’s actual network provider or location, and a traffic for multiple distinct subscribers may originate from a single client IP address. This may affect site operators' security and abuse prevention measures. IP anonymization measures may make an effort to use an egress IP address which has a similar geolocation or is located in the same jurisdiction as the user, but any such behavior is particular to the user agent and not guaranteed by this specification.</p>
+   <h2 class="heading settled" data-level="3" id="privacy-considerations"><span class="secno">3. </span><span class="content">Privacy considerations</span><a class="self-link" href="#privacy-considerations"></a></h2>
+   <h3 class="heading settled" data-level="3.1" id="privacy-heuristics"><span class="secno">3.1. </span><span class="content">Heuristics</span><a class="self-link" href="#privacy-heuristics"></a></h3>
+   <p>Because the candidate prefetches and other actions are not required, the user agent can use heuristics to determine which actions would be best to execute. Because it may be observable to the document whether actions were executed, user agents must take care to protect privacy when making such decisions — for instance by only using information which is already available to the origin. If these heuristics depend on any persistent state, that state must be erased whenever the user erases other site data. If the user agent automatically clears other site data from time to time, it must erase such persistent state at the same time.</p>
+   <div class="note" role="note"> The use of <em>origin</em> here instead of <em>site</em> here is intentional. Origins generally form the basis for the web’s security boundary. Though same-site origins are generally allowed to coordinate if they wish, origins are generally not allowed access to data from other origins, even same-site ones. </div>
+   <p>Examples of inputs which would be already known to the document:</p>
+   <ul>
+    <li data-md>
+     <p>author-supplied scores (if future version of this specification allows specifying them)</p>
+    <li data-md>
+     <p>order of appearance in the document</p>
+    <li data-md>
+     <p>whether the link is in the viewport</p>
+    <li data-md>
+     <p>whether the cursor is near the link</p>
+    <li data-md>
+     <p>rendered size of the link</p>
+   </ul>
+   <p>Examples of persistent data related to the origin (which the origin could have gathered itself) but which must be erased according to user intent:</p>
+   <ul>
+    <li data-md>
+     <p>whether the user has clicked this or similar links on this document or other documents on the same origin</p>
+   </ul>
+   <p>Examples of device information which may be valuable in deciding whether prefetching is appropriate, but which must be considered as part of the user agent’s overall privacy posture because it may make the user more identifiable across origins:</p>
+   <ul>
+    <li data-md>
+     <p>coarse device class (CPU, memory)</p>
+    <li data-md>
+     <p>coarse battery level</p>
+    <li data-md>
+     <p>whether the network connection is known to be metered</p>
+   </ul>
+   <h3 class="heading settled" data-level="3.2" id="privacy-intent"><span class="secno">3.2. </span><span class="content">Intent</span><a class="self-link" href="#privacy-intent"></a></h3>
+   <p>While efforts have been made to minimize the privacy impact of prefetching, some users may nonetheless prefer that prefetching not occur, even though this may make loading slower. User agents are encouraged to provide a setting to disable prefetching features to accommodate such users.</p>
+   <h3 class="heading settled" data-level="3.3" id="privacy-partitioning"><span class="secno">3.3. </span><span class="content">Partitioning</span><a class="self-link" href="#privacy-partitioning"></a></h3>
+   <p>Some user agents <a href="https://privacycg.github.io/storage-partitioning/">partition storage</a> according to the site or origin of the top-level document. In order for prefetching and prerendering to be useful, it is therefore essential that prefetching or prerendering of a document either occur in the partition in which the navigation would occur (e.g., for a same-origin URL) or in an isolated partition, so as to ensure that prefetching does not become a mechanism for bypassing the partitioning scheme.</p>
+   <div class="issue" id="issue-641b3e22"><a class="self-link" href="#issue-641b3e22"></a>Expand this section once more detail on prefetch and prerender partitioning mechanism is specified.</div>
+   <h3 class="heading settled" data-level="3.4" id="privacy-identity-joining"><span class="secno">3.4. </span><span class="content">Identity joining</span><a class="self-link" href="#privacy-identity-joining"></a></h3>
+   <p>This specification describes a mechanism through which HTTP requests for later top-level navigation (in the case of prefetching) can be made without a user gesture. It is natural to ask whether it is possible for two coordinating sites to connect user identities.</p>
+   <p>Since existing <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#credentials" id="ref-for-credentials①">credentials</a> for the destination origin are not sent (assuming it is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin①">same origin</a> with the referrer), that site is limited in its ability to identify the user before navigation in a similar way to if the referrer site had simply used <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a> to make an uncredentialed request. Upon navigation, this becomes similar to ordinary navigation (e.g., by clicking a link that was not prefetched).</p>
+   <p>To the extent that user agents attempt to mitigate identity joining for ordinary fetches and navigations, they can apply similar mitigations to prefetched navigations.</p>
+  </main>
+<script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script>
+  <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
+  <ul class="index">
+   <li><a href="#prefetch-candidate-anonymization-policy">anonymization policy</a><span>, in § 1.5</span>
+   <li><a href="#consider-speculation">consider speculation</a><span>, in § 1.5</span>
+   <li><a href="#prefetch-candidate-continues">continues</a><span>, in § 1.5</span>
+   <li><a href="#document-list-of-speculation-rule-sets">list of speculation rule sets</a><span>, in § 1.5</span>
+   <li><a href="#parse-a-speculation-rule">parse a speculation rule</a><span>, in § 1.4</span>
+   <li><a href="#parse-speculation-rules">parse speculation rules</a><span>, in § 1.4</span>
+   <li><a href="#prefetch-candidate">prefetch candidate</a><span>, in § 1.5</span>
+   <li><a href="#speculation-rule-set-prefetch-rules">prefetch rules</a><span>, in § 1.1</span>
+   <li><a href="#prerender-candidate">prerender candidate</a><span>, in § 1.5</span>
+   <li><a href="#speculation-rule-set-prerender-rules">prerender rules</a><span>, in § 1.1</span>
+   <li>
+    referrer policy
+    <ul>
+     <li><a href="#prefetch-candidate-referrer-policy">dfn for prefetch candidate</a><span>, in § 1.5</span>
+     <li><a href="#prerender-candidate-referrer-policy">dfn for prerender candidate</a><span>, in § 1.5</span>
+    </ul>
+   <li><a href="#speculation-rule-requirements">requirements</a><span>, in § 1.1</span>
+   <li><a href="#speculation-rule">speculation rule</a><span>, in § 1.1</span>
+   <li><a href="#speculation-rule-set">speculation rule set</a><span>, in § 1.1</span>
+   <li>
+    target browsing context name hint
+    <ul>
+     <li><a href="#prerender-candidate-target-browsing-context-name-hint">dfn for prerender candidate</a><span>, in § 1.5</span>
+     <li><a href="#speculation-rule-target-browsing-context-name-hint">dfn for speculation rule</a><span>, in § 1.1</span>
+    </ul>
+   <li>
+    URL
+    <ul>
+     <li><a href="#prefetch-candidate-url">dfn for prefetch candidate</a><span>, in § 1.5</span>
+     <li><a href="#prerender-candidate-url">dfn for prerender candidate</a><span>, in § 1.5</span>
+    </ul>
+   <li><a href="#speculation-rule-urls">URLs</a><span>, in § 1.1</span>
+  </ul>
+  <aside class="dfn-panel" data-for="term-for-concept-child-text-content">
+   <a href="https://dom.spec.whatwg.org/#concept-child-text-content">https://dom.spec.whatwg.org/#concept-child-text-content</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-child-text-content">1.2. The script element</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-node-children-changed-ext">
+   <a href="https://dom.spec.whatwg.org/#concept-node-children-changed-ext">https://dom.spec.whatwg.org/#concept-node-children-changed-ext</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-node-children-changed-ext">1.2. The script element</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-document">
+   <a href="https://dom.spec.whatwg.org/#concept-document">https://dom.spec.whatwg.org/#concept-document</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-document">1.5. Processing model</a> <a href="#ref-for-concept-document①">(2)</a> <a href="#ref-for-concept-document②">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-node-document">
+   <a href="https://dom.spec.whatwg.org/#concept-node-document">https://dom.spec.whatwg.org/#concept-node-document</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-node-document">1.2. The script element</a> <a href="#ref-for-concept-node-document①">(2)</a>
+    <li><a href="#ref-for-concept-node-document②">1.3. Prepare the script element</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-document-origin">
+   <a href="https://dom.spec.whatwg.org/#concept-document-origin">https://dom.spec.whatwg.org/#concept-document-origin</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-document-origin">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-credentials">
+   <a href="https://fetch.spec.whatwg.org/#credentials">https://fetch.spec.whatwg.org/#credentials</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-credentials">2.1. Cross-site request forgery</a>
+    <li><a href="#ref-for-credentials①">3.4. Identity joining</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-http-scheme">
+   <a href="https://fetch.spec.whatwg.org/#http-scheme">https://fetch.spec.whatwg.org/#http-scheme</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-http-scheme">1.4. Parsing</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-manipulation-task-source">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#dom-manipulation-task-source">https://html.spec.whatwg.org/multipage/webappapis.html#dom-manipulation-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-manipulation-task-source">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-already-started">
+   <a href="https://html.spec.whatwg.org/multipage/scripting.html#already-started">https://html.spec.whatwg.org/multipage/scripting.html#already-started</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-already-started">1.2. The script element</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-await-a-stable-state">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#await-a-stable-state">https://html.spec.whatwg.org/multipage/webappapis.html#await-a-stable-state</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-await-a-stable-state">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-document-bc">
+   <a href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc">https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-document-bc">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-document-base-url">
+   <a href="https://html.spec.whatwg.org/multipage/urls-and-fetching.html#document-base-url">https://html.spec.whatwg.org/multipage/urls-and-fetching.html#document-base-url</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-document-base-url">1.2. The script element</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-event-error">
+   <a href="https://html.spec.whatwg.org/multipage/indices.html#event-error">https://html.spec.whatwg.org/multipage/indices.html#event-error</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-event-error">1.2. The script element</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-execute-the-script-element">
+   <a href="https://html.spec.whatwg.org/multipage/scripting.html#execute-the-script-element">https://html.spec.whatwg.org/multipage/scripting.html#execute-the-script-element</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-execute-the-script-element">1.2. The script element</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-fully-active">
+   <a href="https://html.spec.whatwg.org/multipage/browsers.html#fully-active">https://html.spec.whatwg.org/multipage/browsers.html#fully-active</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-fully-active">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-html-element-removing-steps">
+   <a href="https://html.spec.whatwg.org/multipage/infrastructure.html#html-element-removing-steps">https://html.spec.whatwg.org/multipage/infrastructure.html#html-element-removing-steps</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-html-element-removing-steps">1.2. The script element</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-in-parallel">
+   <a href="https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel">https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-in-parallel">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-event-load">
+   <a href="https://html.spec.whatwg.org/multipage/indices.html#event-load">https://html.spec.whatwg.org/multipage/indices.html#event-load</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-event-load">1.2. The script element</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-mark-as-ready">
+   <a href="https://html.spec.whatwg.org/multipage/scripting.html#mark-as-ready">https://html.spec.whatwg.org/multipage/scripting.html#mark-as-ready</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-mark-as-ready">1.3. Prepare the script element</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-prepare-the-script-element">
+   <a href="https://html.spec.whatwg.org/multipage/scripting.html#prepare-the-script-element">https://html.spec.whatwg.org/multipage/scripting.html#prepare-the-script-element</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prepare-the-script-element">1.2. The script element</a>
+    <li><a href="#ref-for-prepare-the-script-element①">1.3. Prepare the script element</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-queue-a-global-task">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task">https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-queue-a-global-task">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-relevant-global">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global">https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-relevant-global">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-script-result">
+   <a href="https://html.spec.whatwg.org/multipage/scripting.html#concept-script-result">https://html.spec.whatwg.org/multipage/scripting.html#concept-script-result</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-script-result">1.2. The script element</a> <a href="#ref-for-concept-script-result①">(2)</a> <a href="#ref-for-concept-script-result②">(3)</a> <a href="#ref-for-concept-script-result③">(4)</a> <a href="#ref-for-concept-script-result④">(5)</a> <a href="#ref-for-concept-script-result⑤">(6)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-the-rules-for-choosing-a-browsing-context-given-a-browsing-context-name">
+   <a href="https://html.spec.whatwg.org/multipage/browsers.html#the-rules-for-choosing-a-browsing-context-given-a-browsing-context-name">https://html.spec.whatwg.org/multipage/browsers.html#the-rules-for-choosing-a-browsing-context-given-a-browsing-context-name</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-the-rules-for-choosing-a-browsing-context-given-a-browsing-context-name">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-same-origin">
+   <a href="https://html.spec.whatwg.org/multipage/origin.html#same-origin">https://html.spec.whatwg.org/multipage/origin.html#same-origin</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-same-origin">2.1. Cross-site request forgery</a>
+    <li><a href="#ref-for-same-origin①">3.4. Identity joining</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-script">
+   <a href="https://html.spec.whatwg.org/multipage/scripting.html#script">https://html.spec.whatwg.org/multipage/scripting.html#script</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-script">1.2. The script element</a> <a href="#ref-for-script①">(2)</a> <a href="#ref-for-script②">(3)</a> <a href="#ref-for-script③">(4)</a> <a href="#ref-for-script④">(5)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-script-src">
+   <a href="https://html.spec.whatwg.org/multipage/scripting.html#dom-script-src">https://html.spec.whatwg.org/multipage/scripting.html#dom-script-src</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-script-src">1.2. The script element</a>
+    <li><a href="#ref-for-dom-script-src①">1.3. Prepare the script element</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-dom-script-supports">
+   <a href="https://html.spec.whatwg.org/multipage/scripting.html#dom-script-supports">https://html.spec.whatwg.org/multipage/scripting.html#dom-script-supports</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-script-supports">1.2. The script element</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-synchronous-section">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#synchronous-section">https://html.spec.whatwg.org/multipage/webappapis.html#synchronous-section</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-synchronous-section">1.5. Processing model</a> <a href="#ref-for-synchronous-section①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-script-type">
+   <a href="https://html.spec.whatwg.org/multipage/scripting.html#concept-script-type">https://html.spec.whatwg.org/multipage/scripting.html#concept-script-type</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-script-type">1.2. The script element</a> <a href="#ref-for-concept-script-type①">(2)</a>
+    <li><a href="#ref-for-concept-script-type②">1.3. Prepare the script element</a> <a href="#ref-for-concept-script-type③">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-valid-browsing-context-name-or-keyword">
+   <a href="https://html.spec.whatwg.org/multipage/browsers.html#valid-browsing-context-name-or-keyword">https://html.spec.whatwg.org/multipage/browsers.html#valid-browsing-context-name-or-keyword</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-valid-browsing-context-name-or-keyword">1.4. Parsing</a>
+    <li><a href="#ref-for-valid-browsing-context-name-or-keyword①">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-set-append">
+   <a href="https://infra.spec.whatwg.org/#set-append">https://infra.spec.whatwg.org/#set-append</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-set-append">1.4. Parsing</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-ascii-case-insensitive">
+   <a href="https://infra.spec.whatwg.org/#ascii-case-insensitive">https://infra.spec.whatwg.org/#ascii-case-insensitive</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-ascii-case-insensitive">1.3. Prepare the script element</a> <a href="#ref-for-ascii-case-insensitive①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-assert">
+   <a href="https://infra.spec.whatwg.org/#assert">https://infra.spec.whatwg.org/#assert</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-assert">1.2. The script element</a>
+    <li><a href="#ref-for-assert①">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-list-contain">
+   <a href="https://infra.spec.whatwg.org/#list-contain">https://infra.spec.whatwg.org/#list-contain</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-list-contain">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-iteration-continue">
+   <a href="https://infra.spec.whatwg.org/#iteration-continue">https://infra.spec.whatwg.org/#iteration-continue</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-iteration-continue">1.4. Parsing</a> <a href="#ref-for-iteration-continue①">(2)</a> <a href="#ref-for-iteration-continue②">(3)</a> <a href="#ref-for-iteration-continue③">(4)</a> <a href="#ref-for-iteration-continue④">(5)</a> <a href="#ref-for-iteration-continue⑤">(6)</a> <a href="#ref-for-iteration-continue⑥">(7)</a>
+    <li><a href="#ref-for-iteration-continue⑦">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-map-exists">
+   <a href="https://infra.spec.whatwg.org/#map-exists">https://infra.spec.whatwg.org/#map-exists</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-map-exists">1.4. Parsing</a> <a href="#ref-for-map-exists①">(2)</a> <a href="#ref-for-map-exists②">(3)</a> <a href="#ref-for-map-exists③">(4)</a> <a href="#ref-for-map-exists④">(5)</a> <a href="#ref-for-map-exists⑤">(6)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-list-iterate">
+   <a href="https://infra.spec.whatwg.org/#list-iterate">https://infra.spec.whatwg.org/#list-iterate</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-list-iterate">1.4. Parsing</a> <a href="#ref-for-list-iterate①">(2)</a> <a href="#ref-for-list-iterate②">(3)</a> <a href="#ref-for-list-iterate③">(4)</a>
+    <li><a href="#ref-for-list-iterate④">1.5. Processing model</a> <a href="#ref-for-list-iterate⑤">(2)</a> <a href="#ref-for-list-iterate⑥">(3)</a> <a href="#ref-for-list-iterate⑦">(4)</a> <a href="#ref-for-list-iterate⑧">(5)</a> <a href="#ref-for-list-iterate⑨">(6)</a> <a href="#ref-for-list-iterate①⓪">(7)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-struct-item">
+   <a href="https://infra.spec.whatwg.org/#struct-item">https://infra.spec.whatwg.org/#struct-item</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-struct-item">1.1. Definitions</a> <a href="#ref-for-struct-item①">(2)</a>
+    <li><a href="#ref-for-struct-item②">1.5. Processing model</a> <a href="#ref-for-struct-item③">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-map-key">
+   <a href="https://infra.spec.whatwg.org/#map-key">https://infra.spec.whatwg.org/#map-key</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-map-key">1.4. Parsing</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-list">
+   <a href="https://infra.spec.whatwg.org/#list">https://infra.spec.whatwg.org/#list</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-list">1.1. Definitions</a> <a href="#ref-for-list①">(2)</a>
+    <li><a href="#ref-for-list②">1.4. Parsing</a> <a href="#ref-for-list③">(2)</a> <a href="#ref-for-list④">(3)</a> <a href="#ref-for-list⑤">(4)</a> <a href="#ref-for-list⑥">(5)</a>
+    <li><a href="#ref-for-list⑦">1.5. Processing model</a> <a href="#ref-for-list⑧">(2)</a> <a href="#ref-for-list⑨">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-ordered-map">
+   <a href="https://infra.spec.whatwg.org/#ordered-map">https://infra.spec.whatwg.org/#ordered-map</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-ordered-map">1.4. Parsing</a> <a href="#ref-for-ordered-map①">(2)</a> <a href="#ref-for-ordered-map②">(3)</a> <a href="#ref-for-ordered-map③">(4)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-ordered-set">
+   <a href="https://infra.spec.whatwg.org/#ordered-set">https://infra.spec.whatwg.org/#ordered-set</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-ordered-set">1.1. Definitions</a> <a href="#ref-for-ordered-set①">(2)</a>
+    <li><a href="#ref-for-ordered-set②">1.4. Parsing</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-parse-a-json-string-to-an-infra-value">
+   <a href="https://infra.spec.whatwg.org/#parse-a-json-string-to-an-infra-value">https://infra.spec.whatwg.org/#parse-a-json-string-to-an-infra-value</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-parse-a-json-string-to-an-infra-value">1.4. Parsing</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-list-remove">
+   <a href="https://infra.spec.whatwg.org/#list-remove">https://infra.spec.whatwg.org/#list-remove</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-list-remove">1.2. The script element</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-list-replace">
+   <a href="https://infra.spec.whatwg.org/#list-replace">https://infra.spec.whatwg.org/#list-replace</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-list-replace">1.2. The script element</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-string">
+   <a href="https://infra.spec.whatwg.org/#string">https://infra.spec.whatwg.org/#string</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-string">1.1. Definitions</a> <a href="#ref-for-string①">(2)</a>
+    <li><a href="#ref-for-string②">1.4. Parsing</a> <a href="#ref-for-string③">(2)</a> <a href="#ref-for-string④">(3)</a> <a href="#ref-for-string⑤">(4)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-struct">
+   <a href="https://infra.spec.whatwg.org/#struct">https://infra.spec.whatwg.org/#struct</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-struct">1.1. Definitions</a> <a href="#ref-for-struct①">(2)</a>
+    <li><a href="#ref-for-struct②">1.5. Processing model</a> <a href="#ref-for-struct③">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-prerendering-browsing-context-activate">
+   <a href="prerendering.html#prerendering-browsing-context-activate">prerendering.html#prerendering-browsing-context-activate</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prerendering-browsing-context-activate">1.5. Processing model</a> <a href="#ref-for-prerendering-browsing-context-activate①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-prefetch-record-anonymization-policy">
+   <a href="prefetch.html#prefetch-record-anonymization-policy">prefetch.html#prefetch-record-anonymization-policy</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prefetch-record-anonymization-policy">1.5. Processing model</a> <a href="#ref-for-prefetch-record-anonymization-policy①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-prefetch-record-cancel-and-discard">
+   <a href="prefetch.html#prefetch-record-cancel-and-discard">prefetch.html#prefetch-record-cancel-and-discard</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prefetch-record-cancel-and-discard">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-create-a-prerendering-browsing-context">
+   <a href="prerendering.html#create-a-prerendering-browsing-context">prerendering.html#create-a-prerendering-browsing-context</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-create-a-prerendering-browsing-context">1.5. Processing model</a> <a href="#ref-for-create-a-prerendering-browsing-context①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-cross-origin-prefetch-ip-anonymization-policy">
+   <a href="prefetch.html#cross-origin-prefetch-ip-anonymization-policy">prefetch.html#cross-origin-prefetch-ip-anonymization-policy</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-cross-origin-prefetch-ip-anonymization-policy">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-prefetch-record-label">
+   <a href="prefetch.html#prefetch-record-label">prefetch.html#prefetch-record-label</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prefetch-record-label">1.5. Processing model</a> <a href="#ref-for-prefetch-record-label①">(2)</a> <a href="#ref-for-prefetch-record-label②">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-cross-origin-prefetch-ip-anonymization-policy-origin">
+   <a href="prefetch.html#cross-origin-prefetch-ip-anonymization-policy-origin">prefetch.html#cross-origin-prefetch-ip-anonymization-policy-origin</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-cross-origin-prefetch-ip-anonymization-policy-origin">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-prefetch">
+   <a href="prefetch.html#prefetch">prefetch.html#prefetch</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prefetch">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-prefetch-ip-anonymization-policy">
+   <a href="prefetch.html#prefetch-ip-anonymization-policy">prefetch.html#prefetch-ip-anonymization-policy</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prefetch-ip-anonymization-policy">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-prefetch-record">
+   <a href="prefetch.html#prefetch-record">prefetch.html#prefetch-record</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prefetch-record">1.5. Processing model</a> <a href="#ref-for-prefetch-record①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-document-prefetch-records">
+   <a href="prefetch.html#document-prefetch-records">prefetch.html#document-prefetch-records</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-document-prefetch-records">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-prefetch-record-referrer-policy">
+   <a href="prefetch.html#prefetch-record-referrer-policy">prefetch.html#prefetch-record-referrer-policy</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prefetch-record-referrer-policy">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-prefetch-record-state">
+   <a href="prefetch.html#prefetch-record-state">prefetch.html#prefetch-record-state</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prefetch-record-state">1.5. Processing model</a> <a href="#ref-for-prefetch-record-state①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-prefetch-record-url">
+   <a href="prefetch.html#prefetch-record-url">prefetch.html#prefetch-record-url</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prefetch-record-url">1.5. Processing model</a> <a href="#ref-for-prefetch-record-url①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-referrer-policy">
+   <a href="https://w3c.github.io/webappsec-referrer-policy/#referrer-policy">https://w3c.github.io/webappsec-referrer-policy/#referrer-policy</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-referrer-policy">1.5. Processing model</a> <a href="#ref-for-referrer-policy①">(2)</a> <a href="#ref-for-referrer-policy②">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-basic-url-parser">
+   <a href="https://url.spec.whatwg.org/#concept-basic-url-parser">https://url.spec.whatwg.org/#concept-basic-url-parser</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-basic-url-parser">1.4. Parsing</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-url-scheme">
+   <a href="https://url.spec.whatwg.org/#concept-url-scheme">https://url.spec.whatwg.org/#concept-url-scheme</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-url-scheme">1.4. Parsing</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-url">
+   <a href="https://url.spec.whatwg.org/#concept-url">https://url.spec.whatwg.org/#concept-url</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-url">1.1. Definitions</a>
+    <li><a href="#ref-for-concept-url①">1.4. Parsing</a> <a href="#ref-for-concept-url②">(2)</a>
+    <li><a href="#ref-for-concept-url③">1.5. Processing model</a> <a href="#ref-for-concept-url④">(2)</a>
+   </ul>
+  </aside>
+  <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
+  <ul class="index">
+   <li>
+    <a data-link-type="biblio">[DOM]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-concept-child-text-content">child text content</span>
+     <li><span class="dfn-paneled" id="term-for-concept-node-children-changed-ext">children changed steps</span>
+     <li><span class="dfn-paneled" id="term-for-concept-document">document</span>
+     <li><span class="dfn-paneled" id="term-for-concept-node-document">node document</span>
+     <li><span class="dfn-paneled" id="term-for-concept-document-origin">origin</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[FETCH]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-credentials">credentials</span>
+     <li><span class="dfn-paneled" id="term-for-http-scheme">http(s) scheme</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[HTML]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-dom-manipulation-task-source">DOM manipulation task source</span>
+     <li><span class="dfn-paneled" id="term-for-already-started">already started</span>
+     <li><span class="dfn-paneled" id="term-for-await-a-stable-state">await a stable state</span>
+     <li><span class="dfn-paneled" id="term-for-concept-document-bc">browsing context</span>
+     <li><span class="dfn-paneled" id="term-for-document-base-url">document base url</span>
+     <li><span class="dfn-paneled" id="term-for-event-error">error</span>
+     <li><span class="dfn-paneled" id="term-for-execute-the-script-element">execute the script element</span>
+     <li><span class="dfn-paneled" id="term-for-fully-active">fully active</span>
+     <li><span class="dfn-paneled" id="term-for-html-element-removing-steps">html element removing steps</span>
+     <li><span class="dfn-paneled" id="term-for-in-parallel">in parallel</span>
+     <li><span class="dfn-paneled" id="term-for-event-load">load</span>
+     <li><span class="dfn-paneled" id="term-for-mark-as-ready">mark as ready</span>
+     <li><span class="dfn-paneled" id="term-for-prepare-the-script-element">prepare the script element</span>
+     <li><span class="dfn-paneled" id="term-for-queue-a-global-task">queue a global task</span>
+     <li><span class="dfn-paneled" id="term-for-concept-relevant-global">relevant global object</span>
+     <li><span class="dfn-paneled" id="term-for-concept-script-result">result</span>
+     <li><span class="dfn-paneled" id="term-for-the-rules-for-choosing-a-browsing-context-given-a-browsing-context-name">rules for choosing a browsing context</span>
+     <li><span class="dfn-paneled" id="term-for-same-origin">same origin</span>
+     <li><span class="dfn-paneled" id="term-for-script">script</span>
+     <li><span class="dfn-paneled" id="term-for-dom-script-src">src</span>
+     <li><span class="dfn-paneled" id="term-for-dom-script-supports">supports(type)</span>
+     <li><span class="dfn-paneled" id="term-for-synchronous-section">synchronous section</span>
+     <li><span class="dfn-paneled" id="term-for-concept-script-type">type</span>
+     <li><span class="dfn-paneled" id="term-for-valid-browsing-context-name-or-keyword">valid browsing context name or keyword</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[INFRA]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-set-append">append <small>(for set)</small></span>
+     <li><span class="dfn-paneled" id="term-for-ascii-case-insensitive">ascii case-insensitive</span>
+     <li><span class="dfn-paneled" id="term-for-assert">assert</span>
+     <li><span class="dfn-paneled" id="term-for-list-contain">contain</span>
+     <li><span class="dfn-paneled" id="term-for-iteration-continue">continue</span>
+     <li><span class="dfn-paneled" id="term-for-map-exists">exist</span>
+     <li><span class="dfn-paneled" id="term-for-list-iterate">for each</span>
+     <li><span class="dfn-paneled" id="term-for-struct-item">item</span>
+     <li><span class="dfn-paneled" id="term-for-map-key">key</span>
+     <li><span class="dfn-paneled" id="term-for-list">list</span>
+     <li><span class="dfn-paneled" id="term-for-ordered-map">map</span>
+     <li><span class="dfn-paneled" id="term-for-ordered-set">ordered set</span>
+     <li><span class="dfn-paneled" id="term-for-parse-a-json-string-to-an-infra-value">parsing a json string to an infra value</span>
+     <li><span class="dfn-paneled" id="term-for-list-remove">remove</span>
+     <li><span class="dfn-paneled" id="term-for-list-replace">replace</span>
+     <li><span class="dfn-paneled" id="term-for-string">string</span>
+     <li><span class="dfn-paneled" id="term-for-struct">struct</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[NAV-SPECULATION]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-prerendering-browsing-context-activate">activate</span>
+     <li><span class="dfn-paneled" id="term-for-prefetch-record-anonymization-policy">anonymization policy</span>
+     <li><span class="dfn-paneled" id="term-for-prefetch-record-cancel-and-discard">cancel and discard</span>
+     <li><span class="dfn-paneled" id="term-for-create-a-prerendering-browsing-context">create a prerendering browsing context</span>
+     <li><span class="dfn-paneled" id="term-for-cross-origin-prefetch-ip-anonymization-policy">cross-origin prefetch ip anonymization policy</span>
+     <li><span class="dfn-paneled" id="term-for-prefetch-record-label">label</span>
+     <li><span class="dfn-paneled" id="term-for-cross-origin-prefetch-ip-anonymization-policy-origin">origin</span>
+     <li><span class="dfn-paneled" id="term-for-prefetch">prefetch</span>
+     <li><span class="dfn-paneled" id="term-for-prefetch-ip-anonymization-policy">prefetch ip anonymization policy</span>
+     <li><span class="dfn-paneled" id="term-for-prefetch-record">prefetch record</span>
+     <li><span class="dfn-paneled" id="term-for-document-prefetch-records">prefetch records</span>
+     <li><span class="dfn-paneled" id="term-for-prefetch-record-referrer-policy">referrer policy</span>
+     <li><span class="dfn-paneled" id="term-for-prefetch-record-state">state</span>
+     <li><span class="dfn-paneled" id="term-for-prefetch-record-url">url</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[REFERRER-POLICY]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-referrer-policy">referrer policy</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[URL]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-concept-basic-url-parser">basic url parser</span>
+     <li><span class="dfn-paneled" id="term-for-concept-url-scheme">scheme</span>
+     <li><span class="dfn-paneled" id="term-for-concept-url">url</span>
+    </ul>
+  </ul>
+  <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
+  <dl>
+   <dt id="biblio-dom">[DOM]
+   <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/"><cite>DOM Standard</cite></a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
+   <dt id="biblio-fetch">[FETCH]
+   <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/"><cite>Fetch Standard</cite></a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
+   <dt id="biblio-html">[HTML]
+   <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
+   <dt id="biblio-infra">[INFRA]
+   <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/"><cite>Infra Standard</cite></a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
+   <dt id="biblio-referrer-policy">[REFERRER-POLICY]
+   <dd>Jochen Eisinger; Emily Stark. <a href="https://w3c.github.io/webappsec-referrer-policy/"><cite>Referrer Policy</cite></a>. URL: <a href="https://w3c.github.io/webappsec-referrer-policy/">https://w3c.github.io/webappsec-referrer-policy/</a>
+   <dt id="biblio-url">[URL]
+   <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/"><cite>URL Standard</cite></a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
+  </dl>
+  <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
+  <dl>
+   <dt id="biblio-csp">[CSP]
+   <dd>Mike West. <a href="https://w3c.github.io/webappsec-csp/"><cite>Content Security Policy Level 3</cite></a>. URL: <a href="https://w3c.github.io/webappsec-csp/">https://w3c.github.io/webappsec-csp/</a>
+   <dt id="biblio-tls">[TLS]
+   <dd>E. Rescorla. <a href="https://www.rfc-editor.org/rfc/rfc8446"><cite>The Transport Layer Security (TLS) Protocol Version 1.3</cite></a>. August 2018. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc8446">https://www.rfc-editor.org/rfc/rfc8446</a>
+  </dl>
+  <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
+  <div style="counter-reset:issue">
+   <div class="issue">We should consider whether we also want to make this execute even if scripting is disabled. <a class="issue-return" href="#issue-c2e21e13" title="Jump to section">↵</a></div>
+   <div class="issue">We should also incorporate the case where a <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/scripting.html#dom-script-src">src</a></code> attribute is set. <a class="issue-return" href="#issue-bb120c28" title="Jump to section">↵</a></div>
+   <div class="issue">We could fire <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/indices.html#event-error">error</a></code> and <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/indices.html#event-load">load</a></code> events if we wanted to. <a class="issue-return" href="#issue-9cd39e70" title="Jump to section">↵</a></div>
+   <div class="issue">It’s likely that we should also handle prerendered and back-forward cached documents. <a class="issue-return" href="#issue-30bcda38" title="Jump to section">↵</a></div>
+   <div class="issue"> We should also cancel speculated prerenders. <a class="issue-return" href="#issue-1cafd308" title="Jump to section">↵</a></div>
+   <div class="issue"> We should revisit the <a data-link-type="dfn" href="https://w3c.github.io/webappsec-referrer-policy/#referrer-policy">referrer policies</a> used here. <a class="issue-return" href="#issue-ffd6d56f" title="Jump to section">↵</a></div>
+   <div class="issue">Expand this section once externally loaded (via "<code>src</code>") speculation rules are specified. <a class="issue-return" href="#issue-8b05d1b2" title="Jump to section">↵</a></div>
+   <div class="issue">Expand this section once more detail on prefetch and prerender partitioning mechanism is specified. <a class="issue-return" href="#issue-641b3e22" title="Jump to section">↵</a></div>
+  </div>
+  <aside class="dfn-panel" data-for="speculation-rule">
+   <b><a href="#speculation-rule">#speculation-rule</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-speculation-rule">1.1. Definitions</a> <a href="#ref-for-speculation-rule①">(2)</a>
+    <li><a href="#ref-for-speculation-rule②">1.4. Parsing</a> <a href="#ref-for-speculation-rule③">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="speculation-rule-urls">
+   <b><a href="#speculation-rule-urls">#speculation-rule-urls</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-speculation-rule-urls">1.4. Parsing</a>
+    <li><a href="#ref-for-speculation-rule-urls①">1.5. Processing model</a> <a href="#ref-for-speculation-rule-urls②">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="speculation-rule-requirements">
+   <b><a href="#speculation-rule-requirements">#speculation-rule-requirements</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-speculation-rule-requirements">1.1. Definitions</a>
+    <li><a href="#ref-for-speculation-rule-requirements①">1.4. Parsing</a>
+    <li><a href="#ref-for-speculation-rule-requirements②">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="speculation-rule-target-browsing-context-name-hint">
+   <b><a href="#speculation-rule-target-browsing-context-name-hint">#speculation-rule-target-browsing-context-name-hint</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-speculation-rule-target-browsing-context-name-hint">1.4. Parsing</a> <a href="#ref-for-speculation-rule-target-browsing-context-name-hint①">(2)</a>
+    <li><a href="#ref-for-speculation-rule-target-browsing-context-name-hint②">1.5. Processing model</a> <a href="#ref-for-speculation-rule-target-browsing-context-name-hint③">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="speculation-rule-set">
+   <b><a href="#speculation-rule-set">#speculation-rule-set</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-speculation-rule-set">1.2. The script element</a> <a href="#ref-for-speculation-rule-set①">(2)</a> <a href="#ref-for-speculation-rule-set②">(3)</a>
+    <li><a href="#ref-for-speculation-rule-set③">1.4. Parsing</a> <a href="#ref-for-speculation-rule-set④">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="speculation-rule-set-prefetch-rules">
+   <b><a href="#speculation-rule-set-prefetch-rules">#speculation-rule-set-prefetch-rules</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-speculation-rule-set-prefetch-rules">1.4. Parsing</a>
+    <li><a href="#ref-for-speculation-rule-set-prefetch-rules①">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="speculation-rule-set-prerender-rules">
+   <b><a href="#speculation-rule-set-prerender-rules">#speculation-rule-set-prerender-rules</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-speculation-rule-set-prerender-rules">1.4. Parsing</a>
+    <li><a href="#ref-for-speculation-rule-set-prerender-rules①">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="parse-speculation-rules">
+   <b><a href="#parse-speculation-rules">#parse-speculation-rules</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-parse-speculation-rules">1.2. The script element</a>
+    <li><a href="#ref-for-parse-speculation-rules①">1.3. Prepare the script element</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="parse-a-speculation-rule">
+   <b><a href="#parse-a-speculation-rule">#parse-a-speculation-rule</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-parse-a-speculation-rule">1.4. Parsing</a> <a href="#ref-for-parse-a-speculation-rule①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="document-list-of-speculation-rule-sets">
+   <b><a href="#document-list-of-speculation-rule-sets">#document-list-of-speculation-rule-sets</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-document-list-of-speculation-rule-sets">1.2. The script element</a> <a href="#ref-for-document-list-of-speculation-rule-sets①">(2)</a>
+    <li><a href="#ref-for-document-list-of-speculation-rule-sets②">1.3. Prepare the script element</a>
+    <li><a href="#ref-for-document-list-of-speculation-rule-sets③">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="prefetch-candidate">
+   <b><a href="#prefetch-candidate">#prefetch-candidate</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prefetch-candidate">1.5. Processing model</a> <a href="#ref-for-prefetch-candidate①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="prefetch-candidate-url">
+   <b><a href="#prefetch-candidate-url">#prefetch-candidate-url</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prefetch-candidate-url">1.5. Processing model</a> <a href="#ref-for-prefetch-candidate-url①">(2)</a> <a href="#ref-for-prefetch-candidate-url②">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="prefetch-candidate-referrer-policy">
+   <b><a href="#prefetch-candidate-referrer-policy">#prefetch-candidate-referrer-policy</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prefetch-candidate-referrer-policy">1.5. Processing model</a> <a href="#ref-for-prefetch-candidate-referrer-policy①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="prefetch-candidate-anonymization-policy">
+   <b><a href="#prefetch-candidate-anonymization-policy">#prefetch-candidate-anonymization-policy</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prefetch-candidate-anonymization-policy">1.5. Processing model</a> <a href="#ref-for-prefetch-candidate-anonymization-policy①">(2)</a> <a href="#ref-for-prefetch-candidate-anonymization-policy②">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="prerender-candidate">
+   <b><a href="#prerender-candidate">#prerender-candidate</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prerender-candidate">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="prerender-candidate-url">
+   <b><a href="#prerender-candidate-url">#prerender-candidate-url</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prerender-candidate-url">1.5. Processing model</a> <a href="#ref-for-prerender-candidate-url①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="prerender-candidate-target-browsing-context-name-hint">
+   <b><a href="#prerender-candidate-target-browsing-context-name-hint">#prerender-candidate-target-browsing-context-name-hint</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prerender-candidate-target-browsing-context-name-hint">1.5. Processing model</a> <a href="#ref-for-prerender-candidate-target-browsing-context-name-hint①">(2)</a> <a href="#ref-for-prerender-candidate-target-browsing-context-name-hint②">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="prerender-candidate-referrer-policy">
+   <b><a href="#prerender-candidate-referrer-policy">#prerender-candidate-referrer-policy</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prerender-candidate-referrer-policy">1.5. Processing model</a> <a href="#ref-for-prerender-candidate-referrer-policy①">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="prefetch-candidate-continues">
+   <b><a href="#prefetch-candidate-continues">#prefetch-candidate-continues</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-prefetch-candidate-continues">1.5. Processing model</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="consider-speculation">
+   <b><a href="#consider-speculation">#consider-speculation</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-consider-speculation">1.2. The script element</a> <a href="#ref-for-consider-speculation①">(2)</a>
+    <li><a href="#ref-for-consider-speculation②">1.3. Prepare the script element</a>
+    <li><a href="#ref-for-consider-speculation③">1.5. Processing model</a>
+   </ul>
+  </aside>
+<script>/* script-dfn-panel */
+
+document.body.addEventListener("click", function(e) {
+    var queryAll = function(sel) { return [].slice.call(document.querySelectorAll(sel)); }
+    // Find the dfn element or panel, if any, that was clicked on.
+    var el = e.target;
+    var target;
+    var hitALink = false;
+    while(el.parentElement) {
+        if(el.tagName == "A") {
+            // Clicking on a link in a <dfn> shouldn't summon the panel
+            hitALink = true;
+        }
+        if(el.classList.contains("dfn-paneled")) {
+            target = "dfn";
+            break;
+        }
+        if(el.classList.contains("dfn-panel")) {
+            target = "dfn-panel";
+            break;
+        }
+        el = el.parentElement;
+    }
+    if(target != "dfn-panel") {
+        // Turn off any currently "on" or "activated" panels.
+        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(function(el){
+            el.classList.remove("on");
+            el.classList.remove("activated");
+        });
+    }
+    if(target == "dfn" && !hitALink) {
+        // open the panel
+        var dfnPanel = document.querySelector(".dfn-panel[data-for='" + el.id + "']");
+        if(dfnPanel) {
+            dfnPanel.classList.add("on");
+            var rect = el.getBoundingClientRect();
+            dfnPanel.style.left = window.scrollX + rect.right + 5 + "px";
+            dfnPanel.style.top = window.scrollY + rect.top + "px";
+            var panelRect = dfnPanel.getBoundingClientRect();
+            var panelWidth = panelRect.right - panelRect.left;
+            if(panelRect.right > document.body.scrollWidth && (rect.left - (panelWidth + 5)) > 0) {
+                // Reposition, because the panel is overflowing
+                dfnPanel.style.left = window.scrollX + rect.left - (panelWidth + 5) + "px";
+            }
+        } else {
+            console.log("Couldn't find .dfn-panel[data-for='" + el.id + "']");
+        }
+    } else if(target == "dfn-panel") {
+        // Switch it to "activated" state, which pins it.
+        el.classList.add("activated");
+        el.style.left = null;
+        el.style.top = null;
+    }
+
+});
+</script>
+<script>/* script-var-click-highlighting */
+
+    document.addEventListener("click", e=>{
+        if(e.target.nodeName == "VAR") {
+            highlightSameAlgoVars(e.target);
+        }
+    });
+    {
+        const indexCounts = new Map();
+        const indexNames = new Map();
+        function highlightSameAlgoVars(v) {
+            // Find the algorithm container.
+            let algoContainer = null;
+            let searchEl = v;
+            while(algoContainer == null && searchEl != document.body) {
+                searchEl = searchEl.parentNode;
+                if(searchEl.hasAttribute("data-algorithm")) {
+                    algoContainer = searchEl;
+                }
+            }
+
+            // Not highlighting document-global vars,
+            // too likely to be unrelated.
+            if(algoContainer == null) return;
+
+            const algoName = algoContainer.getAttribute("data-algorithm");
+            const varName = getVarName(v);
+            const addClass = !v.classList.contains("selected");
+            let highlightClass = null;
+            if(addClass) {
+                const index = chooseHighlightIndex(algoName, varName);
+                indexCounts.get(algoName)[index] += 1;
+                indexNames.set(algoName+"///"+varName, index);
+                highlightClass = nameFromIndex(index);
+            } else {
+                const index = previousHighlightIndex(algoName, varName);
+                indexCounts.get(algoName)[index] -= 1;
+                highlightClass = nameFromIndex(index);
+            }
+
+            // Find all same-name vars, and toggle their class appropriately.
+            for(const el of algoContainer.querySelectorAll("var")) {
+                if(getVarName(el) == varName) {
+                    el.classList.toggle("selected", addClass);
+                    el.classList.toggle(highlightClass, addClass);
+                }
+            }
+        }
+        function getVarName(el) {
+            return el.textContent.replace(/(\s|\xa0)+/, " ").trim();
+        }
+        function chooseHighlightIndex(algoName, varName) {
+            let indexes = null;
+            if(indexCounts.has(algoName)) {
+                indexes = indexCounts.get(algoName);
+            } else {
+                // 7 classes right now
+                indexes = [0,0,0,0,0,0,0];
+                indexCounts.set(algoName, indexes);
+            }
+
+            // If the element was recently unclicked,
+            // *and* that color is still unclaimed,
+            // give it back the same color.
+            const lastIndex = previousHighlightIndex(algoName, varName);
+            if(indexes[lastIndex] === 0) return lastIndex;
+
+            // Find the earliest index with the lowest count.
+            const minCount = Math.min.apply(null, indexes);
+            let index = null;
+            for(var i = 0; i < indexes.length; i++) {
+                if(indexes[i] == minCount) {
+                    return i;
+                }
+            }
+        }
+        function previousHighlightIndex(algoName, varName) {
+            return indexNames.get(algoName+"///"+varName);
+        }
+        function nameFromIndex(index) {
+            return "selected" + index;
+        }
+    }
+    </script>
