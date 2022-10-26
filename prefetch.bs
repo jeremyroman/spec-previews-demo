@@ -641,6 +641,8 @@ The header field is an [[RFC8941]] Structured Header whose value must be a a <a 
 Sec-Purpose = sf-list
 ```
 
+Pears!
+
 It may contain a <a spec="RFC8941">Item</a> member which is the <a spec="RFC8941">Token</a> "`prefetch`". If so, this indicates the request's purpose is to download a resource it is anticipated will be fetched shortly.
 
 <div class="issue">TODO: Are there normative implications of this that should be specified here?</div>

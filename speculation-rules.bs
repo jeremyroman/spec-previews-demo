@@ -522,6 +522,8 @@ Examples of inputs which would be already known to the document:
 * whether the cursor is near the link
 * rendered size of the link
 
+kiwifruit
+
 Examples of persistent data related to the origin (which the origin could have gathered itself) but which must be erased according to user intent:
 * whether the user has clicked this or similar links on this document or other documents on the same origin
 
@@ -531,6 +533,8 @@ Examples of device information which may be valuable in deciding whether prefetc
 * whether the network connection is known to be metered
 
 <h3 id="privacy-intent">Intent</h3>
+
+Bananas!
 
 While efforts have been made to minimize the privacy impact of prefetching, some users may nonetheless prefer that prefetching not occur, even though this may make loading slower. User agents are encouraged to provide a setting to disable prefetching features to accommodate such users.
 

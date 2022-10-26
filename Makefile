@@ -1,6 +1,6 @@
 SHELL=/bin/bash
 
-bikeshed_files = prefetch.bs prerendering.bs speculation-rules.bs
+bikeshed_files = prefetch.bs prerendering.bs speculation-rules.bs another.bs
 
 .PHONY: ci clean local remote
 
